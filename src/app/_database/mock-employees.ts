@@ -15,6 +15,6 @@ export const EMPLOYEES: Employee[] = [
         lastName: 'Kowalski',
         position: positions[0],
         room: rooms[0],
-        salary: 400
+        salary: 600
     }
 ]
