@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
+
+import { RoomService } from '../../_services/room.service';
+import { Room } from '../../_models/room';
 
 @Component({
   selector: 'app-rooms-table',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomsTableComponent implements OnInit {
 
-  constructor() { }
+  rooms = [];
+
+  constructor(private roomService: RoomService) { }
 
   ngOnInit() {
+    this.loadRooms();
+  }
+
+  loadRooms() {
+    this.roomService.getRooms()
+      .pipe(first())
+      .subscribe(rooms => this.rooms = rooms);
   }
 
 }

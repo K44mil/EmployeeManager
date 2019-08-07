@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PositionService } from '../../_services/position.service';
+import { first } from 'rxjs/operators';
+
 @Component({
   selector: 'app-positions-table',
   templateUrl: './positions-table.component.html',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PositionsTableComponent implements OnInit {
 
-  constructor() { }
+  positions = [];
+
+  constructor(private positionService: PositionService) { }
 
   ngOnInit() {
+    this.loadPositions();
+  }
+
+  loadPositions() {
+    this.positionService.getPositions()
+      .pipe(first())
+      .subscribe(positions => this.positions = positions);
   }
 
 }

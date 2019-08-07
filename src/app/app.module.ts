@@ -22,7 +22,8 @@ import { PositionsTableComponent } from './_components/positions-table/positions
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     fakeBackendProvider

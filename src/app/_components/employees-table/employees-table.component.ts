@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
+
+import { EmployeeService } from '../../_services/employee.service';
 
 @Component({
   selector: 'app-employees-table',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeesTableComponent implements OnInit {
 
-  constructor() { }
+  employees = [];
+
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
+    this.loadEmployees();
   }
 
+  loadEmployees() {
+    this.employeeService.getEmployees()
+      .pipe(first())
+      .subscribe(employees => this.employees = employees);
+  }
 }
