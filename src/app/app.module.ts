@@ -15,6 +15,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { AddRoomComponent } from './_components/add-room/add-room.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { AddPositionComponent } from './_components/add-position/add-position.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     EmployeesTableComponent,
     RoomsTableComponent,
     PositionsTableComponent,
-    AddRoomComponent
+    AddRoomComponent,
+    AddPositionComponent
   ],
   imports: [
     BrowserModule,

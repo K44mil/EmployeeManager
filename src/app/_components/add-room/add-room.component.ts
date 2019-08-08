@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomService } from 'src/app/_services/room.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 @Component({

@@ -22,7 +22,14 @@
             </tr>
         </tbody>
     </table>
-    <div>
-        <button class="btn btn-success">ADD NEW POSITION</button>
+    <div class="container">
+        <button class="btn btn-success" (click)="addPosition()">ADD NEW POSITION</button>
     </div>
 </div>
+
+<ngx-smart-modal #positionModal identifier="positionModal">
+    <h1>ADD NEW POSITION</h1>
+    <app-add-position></app-add-position>
+
+    <button class="btn btn-secondary btn-modal" (click)="positionModal.close()">CLOSE</button>
+</ngx-smart-modal>

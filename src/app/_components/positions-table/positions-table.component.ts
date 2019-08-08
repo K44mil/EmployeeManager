@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PositionService } from '../../_services/position.service';
 import { first } from 'rxjs/operators';
 import { Position } from '../../_models/position';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-positions-table',
@@ -13,7 +14,10 @@ export class PositionsTableComponent implements OnInit {
 
   positions: Position[] = null;
 
-  constructor(private positionService: PositionService) { }
+  constructor(
+    private positionService: PositionService,
+    private ngxSmartModalService: NgxSmartModalService
+    ) { }
 
   ngOnInit() {
     this.loadPositions();
@@ -29,6 +33,10 @@ export class PositionsTableComponent implements OnInit {
     this.positionService.delete(id)
       .pipe(first())
       .subscribe(() => this.loadPositions());
+  }
+
+  addPosition() {
+    this.ngxSmartModalService.getModal('positionModal').open();
   }
 
 }
