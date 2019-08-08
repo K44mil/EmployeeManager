@@ -26,7 +26,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize())
-            .pipe(delay(500))
+            .pipe(delay(100))
             .pipe(dematerialize());
 
         function handleRoute() {
@@ -37,10 +37,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getRooms();
                 case url.endsWith('/positions') && method === 'GET':
                     return getPositions();
+                case url.match(/\/positions\/\d+$/) && method === 'DELETE':
+                    return deletePosition();
+                case url.match(/\/rooms\/\d+$/) && method === 'DELETE':
+                    return deleteRoom();
+                case url.match(/\/employees\/\d+$/) && method === 'DELETE':
+                    return deleteEmployee();
                 default:
                     return next.handle(request);
             }
         }
+
+        // GET functions
 
         function getEmployees() {
             return ok(employees);
@@ -54,10 +62,35 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(positions);
         }
 
+        // DELETE functions
+
+        function deletePosition() {
+            positions = positions.filter(x => x.id !== idFromUrl());
+            localStorage.setItem('positions', JSON.stringify(positions));
+            return ok();
+        }
+
+        function deleteRoom() {
+            rooms = rooms.filter(x => x.id !== idFromUrl());
+            localStorage.setItem('rooms', JSON.stringify(rooms));
+            return ok();
+        }
+
+        function deleteEmployee() {
+            employees = employees.filter(x => x.id !== idFromUrl());
+            localStorage.setItem('employees', JSON.stringify(employees));
+            return ok();
+        }
+
         // helper functions
 
         function ok(body?) {
             return of(new HttpResponse({ status: 200, body }));
+        }
+
+        function idFromUrl() {
+            const urlParts = url.split('/');
+            return parseInt(urlParts[urlParts.length - 1]);
         }
     }
 }

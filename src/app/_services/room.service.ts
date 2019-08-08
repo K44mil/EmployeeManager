@@ -16,4 +16,8 @@ export class RoomService {
   getRooms() {
     return this.http.get<any[]>(this.roomsUrl);
   }
+
+  delete(id: number) {
+    return this.http.delete(`${this.roomsUrl}/${id}`);
+  }
 }

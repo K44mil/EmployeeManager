@@ -24,4 +24,10 @@ export class EmployeesTableComponent implements OnInit {
       .pipe(first())
       .subscribe(employees => this.employees = employees);
   }
+
+  deleteEmployee(id: number) {
+    this.employeeService.delete(id)
+      .pipe(first())
+      .subscribe(() => this.loadEmployees());
+  }
 }

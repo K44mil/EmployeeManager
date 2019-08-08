@@ -13,4 +13,8 @@ export class EmployeeService {
   getEmployees() {
     return this.http.get<any[]>(this.employeeUrl);
   }
+
+  delete(id: number) {
+    return this.http.delete(`${this.employeeUrl}/${id}`);
+  }
 }

@@ -25,4 +25,10 @@ export class PositionsTableComponent implements OnInit {
       .subscribe(positions => this.positions = positions);
   }
 
+  deletePosition(id: number) {
+    this.positionService.delete(id)
+      .pipe(first())
+      .subscribe(() => this.loadPositions());
+  }
+
 }

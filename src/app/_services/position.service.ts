@@ -13,4 +13,8 @@ export class PositionService {
   getPositions() {
     return this.http.get<any[]>(this.positionsUrl);
   }
+
+  delete(id: number) {
+    return this.http.delete(`${this.positionsUrl}/${id}`);
+  }
 }

@@ -1,5 +1,5 @@
 <br><br>
-<div class="container" *ngIf="employees">
+<div class="container">
     <table class="table table-striped">
         <thead class="thead-dark">
             <th scope="col">#</th>
@@ -20,7 +20,7 @@
                 <td>{{ employee.room.number }}</td>
                 <td>{{ employee.salary | currency }}</td>
                 <td><button class="btn btn-primary">EDIT</button></td>
-                <td><button class="btn btn-danger">DELETE</button></td>
+                <td><button (click)="deleteEmployee(employee.id)" class="btn btn-danger">DELETE</button></td>
             </tr>
         </tbody>
     </table>

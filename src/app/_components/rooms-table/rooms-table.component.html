@@ -1,5 +1,5 @@
 <br><br>
-<div class="container" *ngIf="rooms">
+<div class="container">
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -18,7 +18,7 @@
                 <td>{{ room.name }}</td>
                 <td>{{ room.capacity }}</td>
                 <td><button class="btn btn-primary">EDIT</button></td>
-                <td><button class="btn btn-danger">DELETE</button></td>
+                <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">DELETE</button></td>
             </tr>
         </tbody>
     </table>

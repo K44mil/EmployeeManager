@@ -25,4 +25,10 @@ export class RoomsTableComponent implements OnInit {
       .subscribe(rooms => this.rooms = rooms);
   }
 
+  deleteRoom(id: number) {
+    this.roomService.delete(id)
+      .pipe(first())
+      .subscribe(() => this.loadRooms());
+  }
+
 }
