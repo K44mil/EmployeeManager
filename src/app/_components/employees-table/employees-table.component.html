@@ -1,10 +1,32 @@
-<p>employees-table works!</p>
+<br><br>
+<div class="container" *ngIf="employees">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Room</th>
+            <th scope="col">Salary</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.firstName }}</td>
+                <td>{{ employee.lastName }}</td>
+                <td>{{ employee.position.name }}</td>
+                <td>{{ employee.room.number }}</td>
+                <td>{{ employee.salary | currency }}</td>
+                <td><button class="btn btn-primary">EDIT</button></td>
+                <td><button class="btn btn-danger">DELETE</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-success">ADD NEW EMPLOYEE</button>
+    </div>
+</div>
 
-<p *ngIf="employees">
-    Employees load correctly!
-</p>
-
-<p *ngIf="!employees">
-    Employees load incorrectly!
-</p>
 

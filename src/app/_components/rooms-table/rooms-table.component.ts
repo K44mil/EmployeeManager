@@ -11,7 +11,7 @@ import { Room } from '../../_models/room';
 })
 export class RoomsTableComponent implements OnInit {
 
-  rooms = [];
+  rooms: Room[] = null;
 
   constructor(private roomService: RoomService) { }
 

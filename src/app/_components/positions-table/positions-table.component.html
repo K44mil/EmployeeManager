@@ -1,9 +1,28 @@
-<p>positions-table works!</p>
-
-<p *ngIf="positions">
-    Positions load correctly!
-</p>
-
-<p *ngIf="!positions">
-    Positions load incorrectly!
-</p>
+<br><br>
+<div class="container" *ngIf="positions">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Minimal Wage</th>
+                <th scope="col">Maximal Wage</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let position of positions">
+                <td>{{ position.id }}</td>
+                <td>{{ position.name }}</td>    
+                <td>{{ position.minWage | currency }}</td>
+                <td>{{ position.maxWage | currency }}</td>
+                <td><button class="btn btn-primary">EDIT</button></td>
+                <td><button class="btn btn-danger">DELETE</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-success">ADD NEW POSITION</button>
+    </div>
+</div>

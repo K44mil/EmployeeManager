@@ -1,9 +1,29 @@
-<p>rooms-table works!</p>
+<br><br>
+<div class="container" *ngIf="rooms">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Number</th>
+                <th scope="col">Name</th>
+                <th scope="col">Capacity</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let room of rooms">
+                <td>{{ room.id }}</td>
+                <td>{{ room.number }}</td>
+                <td>{{ room.name }}</td>
+                <td>{{ room.capacity }}</td>
+                <td><button class="btn btn-primary">EDIT</button></td>
+                <td><button class="btn btn-danger">DELETE</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-success">ADD NEW ROOM</button>
+    </div>
+</div>
 
-<p *ngIf="rooms">
-    Rooms load correctly!
-</p>
-
-<p *ngIf="!rooms">
-    Rooms load incorrectly!
-</p>

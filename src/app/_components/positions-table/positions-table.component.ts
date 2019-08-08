@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { PositionService } from '../../_services/position.service';
 import { first } from 'rxjs/operators';
+import { Position } from '../../_models/position';
 
 @Component({
   selector: 'app-positions-table',
@@ -10,7 +11,7 @@ import { first } from 'rxjs/operators';
 })
 export class PositionsTableComponent implements OnInit {
 
-  positions = [];
+  positions: Position[] = null;
 
   constructor(private positionService: PositionService) { }
 
