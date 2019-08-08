@@ -23,12 +23,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
 
+        
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize())
             .pipe(delay(100))
             .pipe(dematerialize());
-
+       
+        
         function handleRoute() {
             switch(true) {
                 case url.endsWith('/employees') && method === 'GET':

@@ -1,29 +1,32 @@
 <br><br>
-<div class="container">
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Number</th>
-                <th scope="col">Name</th>
-                <th scope="col">Capacity</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let room of rooms">
-                <td>{{ room.id }}</td>
-                <td>{{ room.number }}</td>
-                <td>{{ room.name }}</td>
-                <td>{{ room.capacity }}</td>
-                <td><button class="btn btn-primary">EDIT</button></td>
-                <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">DELETE</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <div>
-        <button class="btn btn-success">ADD NEW ROOM</button>
-    </div>
+<div>
+    <div class="container">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Capacity</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let room of rooms">
+                        <td>{{ room.id }}</td>
+                        <td>{{ room.number }}</td>
+                        <td>{{ room.name }}</td>
+                        <td>{{ room.capacity }}</td>
+                        <td><button class="btn btn-primary">EDIT</button></td>
+                        <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">DELETE</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <button class="btn btn-success">ADD NEW ROOM</button>
+        </div>
 </div>
+
 

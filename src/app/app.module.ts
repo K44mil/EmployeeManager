@@ -11,6 +11,7 @@ import { HomeComponent } from './_components/home/home.component';
 import { EmployeesTableComponent } from './_components/employees-table/employees-table.component';
 import { RoomsTableComponent } from './_components/rooms-table/rooms-table.component';
 import { PositionsTableComponent } from './_components/positions-table/positions-table.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PositionsTableComponent } from './_components/positions-table/positions
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: [
     fakeBackendProvider

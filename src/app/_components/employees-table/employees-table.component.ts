@@ -3,6 +3,7 @@ import { first } from 'rxjs/operators';
 
 import { EmployeeService } from '../../_services/employee.service';
 import { Employee } from '../../_models/employee';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-employees-table',
@@ -13,7 +14,9 @@ export class EmployeesTableComponent implements OnInit {
 
   employees: Employee[] = null;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private ngxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
     this.loadEmployees();
@@ -30,4 +33,9 @@ export class EmployeesTableComponent implements OnInit {
       .pipe(first())
       .subscribe(() => this.loadEmployees());
   }
+
+  addEmployee() {
+    this.ngxSmartModalService.getModal('myModal').open();
+  }
+
 }
