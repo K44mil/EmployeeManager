@@ -45,6 +45,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return deleteRoom();
                 case url.match(/\/employees\/\d+$/) && method === 'DELETE':
                     return deleteEmployee();
+                case url.endsWith('/addRoom') && method === 'POST':
+                    return addRoom();
                 default:
                     return next.handle(request);
             }
@@ -81,6 +83,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function deleteEmployee() {
             employees = employees.filter(x => x.id !== idFromUrl());
             localStorage.setItem('employees', JSON.stringify(employees));
+            return ok();
+        }
+
+        // POST functions
+
+        function addRoom() {
+            const room = body;
+
+            room.id = rooms.length ? Math.max(...rooms.map(x => x.id)) + 1 : 1;
+            rooms.push(room);
+            localStorage.setItem('rooms', JSON.stringify(rooms));
+            
             return ok();
         }
 

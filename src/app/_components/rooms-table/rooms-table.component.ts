@@ -3,6 +3,7 @@ import { first } from 'rxjs/operators';
 
 import { RoomService } from '../../_services/room.service';
 import { Room } from '../../_models/room';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   selector: 'app-rooms-table',
@@ -13,7 +14,10 @@ export class RoomsTableComponent implements OnInit {
 
   rooms: Room[] = null;
 
-  constructor(private roomService: RoomService) { }
+  constructor(
+    private roomService: RoomService,
+    private ngxSmartModalService: NgxSmartModalService
+    ) { }
 
   ngOnInit() {
     this.loadRooms();
@@ -29,6 +33,10 @@ export class RoomsTableComponent implements OnInit {
     this.roomService.delete(id)
       .pipe(first())
       .subscribe(() => this.loadRooms());
+  }
+
+  addRoom() {
+    this.ngxSmartModalService.getModal('roomModal').open();
   }
 
 }

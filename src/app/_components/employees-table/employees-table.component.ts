@@ -34,8 +34,4 @@ export class EmployeesTableComponent implements OnInit {
       .subscribe(() => this.loadEmployees());
   }
 
-  addEmployee() {
-    this.ngxSmartModalService.getModal('myModal').open();
-  }
-
 }

@@ -1,0 +1,38 @@
+<div>
+    <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="number">Room number</label>
+            <input type="text" class="form-control" id="number" formControlName="number">
+            <!-- Validation alerts -->
+            <div *ngIf="f.number.invalid && (f.number.dirty || f.number.touched)">
+                <div *ngIf="f.number.errors.required" class="text-danger">
+                    Room number is required.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Room name</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <!-- Validation alerts -->
+            <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">
+                    <div *ngIf="f.name.errors.required" class="text-danger">
+                        Room name is required.
+                    </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="capacity">Room capacity</label>
+            <input type="text" class="form-control" id="capacity" formControlName="capacity">
+            <!-- Validation alerts -->
+            <div *ngIf="f.capacity.invalid && (f.capacity.dirty || f.capacity.touched)">
+                    <div *ngIf="f.capacity.errors.required" class="text-danger">
+                        Room capacity is required.
+                    </div>
+                    <div *ngIf="f.capacity.errors?.pattern" class="text-danger">
+                        Room capacity should be a number.
+                    </div>
+            </div>
+        </div>
+        <button type="submit" [disabled]="this.roomForm.invalid" class="btn btn-success">ADD</button>
+    </form>
+</div>

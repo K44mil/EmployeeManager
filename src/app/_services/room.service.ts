@@ -20,4 +20,8 @@ export class RoomService {
   delete(id: number) {
     return this.http.delete(`${this.roomsUrl}/${id}`);
   }
+
+  save(room: Room) {
+    return this.http.post(`${this.roomsUrl}/addRoom`, room);
+  }
 }

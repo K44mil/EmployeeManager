@@ -25,8 +25,15 @@
             </table>
         </div>
         <div class="container">
-            <button class="btn btn-success">ADD NEW ROOM</button>
+            <button class="btn btn-success" (click)="addRoom()">ADD NEW ROOM</button>
         </div>
 </div>
+
+<ngx-smart-modal #roomModal identifier="roomModal">
+        <h1>ADD NEW ROOM</h1>
+        <app-add-room></app-add-room>
+    
+    <button class="btn btn-secondary btn-modal" (click)="roomModal.close()">CLOSE</button>
+</ngx-smart-modal>
 
 

@@ -12,6 +12,9 @@ import { EmployeesTableComponent } from './_components/employees-table/employees
 import { RoomsTableComponent } from './_components/rooms-table/rooms-table.component';
 import { PositionsTableComponent } from './_components/positions-table/positions-table.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { AddRoomComponent } from './_components/add-room/add-room.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,13 +22,16 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     HomeComponent,
     EmployeesTableComponent,
     RoomsTableComponent,
-    PositionsTableComponent
+    PositionsTableComponent,
+    AddRoomComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxSmartModalModule.forRoot()
+    NgxSmartModalModule.forRoot(),
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     fakeBackendProvider
