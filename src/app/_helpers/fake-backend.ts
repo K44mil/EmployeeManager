@@ -55,6 +55,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         // GET functions
+        
+            // GET ALL functions
 
         function getEmployees() {
             return ok(employees);
@@ -68,6 +70,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(positions);
         }
 
+            // GET BY ID functions
+            // --TODO--
+        
         // DELETE functions
 
         function deletePosition() {
@@ -94,6 +99,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const room = body;
 
             room.id = rooms.length ? Math.max(...rooms.map(x => x.id)) + 1 : 1;
+            room.occupiedPlaces = 0;
             rooms.push(room);
             localStorage.setItem('rooms', JSON.stringify(rooms));
             

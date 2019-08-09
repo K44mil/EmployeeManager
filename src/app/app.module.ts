@@ -38,7 +38,7 @@ import { AddEmployeeComponent } from './_components/add-employee/add-employee.co
     FormsModule
   ],
   providers: [
-    fakeBackendProvider
+    fakeBackendProvider,
   ],
   bootstrap: [AppComponent]
 })

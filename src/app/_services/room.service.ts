@@ -24,4 +24,8 @@ export class RoomService {
   save(room: Room) {
     return this.http.post(`${this.roomsUrl}/addRoom`, room);
   }
+
+  getNumberOfEmployeesInRoom(id: number) {
+    return this.http.get<any[]>(`${this.roomsUrl}/${id}/numberOfEmployees`);
+  }
 }

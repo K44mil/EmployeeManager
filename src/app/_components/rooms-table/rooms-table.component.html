@@ -17,7 +17,7 @@
                         <td>{{ room.id }}</td>
                         <td>{{ room.number }}</td>
                         <td>{{ room.name }}</td>
-                        <td>{{ room.capacity }}</td>
+                        <td>{{ room.occupiedPlaces }}/{{ room.capacity }}</td>
                         <td><button class="btn btn-primary">EDIT</button></td>
                         <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">DELETE</button></td>
                     </tr>

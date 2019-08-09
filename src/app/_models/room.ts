@@ -3,4 +3,5 @@ export class Room {
     name: string;
     number: string;
     capacity: number;
+    occupiedPlaces: number;
 }

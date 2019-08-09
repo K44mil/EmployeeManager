@@ -39,4 +39,8 @@ export class RoomsTableComponent implements OnInit {
     this.ngxSmartModalService.getModal('roomModal').open();
   }
 
+  getAmountOfWorkers(): string {
+    return '0';
+  }
+
 }
