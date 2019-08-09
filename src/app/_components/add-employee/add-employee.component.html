@@ -1,0 +1,34 @@
+<div>
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="firstName">First name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+            <!-- Validation alerts -->
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+            <!-- Validation alerts -->
+        </div>
+        <div class="form-group">
+            <label for="position">Position</label>
+            <select class="custom-select" size="3" formControlName="position">
+                <option *ngFor="let position of positions">{{ position.name }}</option>
+            </select>
+            <!-- Validation alerts -->
+        </div>
+        <div class="form-group">
+            <label for="room">Room</label>
+            <select class="custom-select" size="3" formControlName="room">
+                <option *ngFor="let room of rooms">{{ room.name }}</option>          
+            </select>
+            <!-- Validation alerts -->
+        </div>
+        <div class="form-group">
+            <label for="salary">Salary</label>
+            <input type="text" class="form-control" id="salary" formControlName="salary">
+            <!-- Validation alerts -->
+        </div>
+        <button type="submit" [disabled]="this.employeeForm.invalid" class="btn btn-success">ADD</button>
+    </form>
+</div>

@@ -25,8 +25,13 @@
         </tbody>
     </table>
     <div>
-        <button class="btn btn-success">ADD NEW EMPLOYEE</button>
+        <button class="btn btn-success" (click)="employeeModal.open()">ADD NEW EMPLOYEE</button>
     </div>
 </div>
 
-<br>
+<ngx-smart-modal #employeeModal identifier="employeeModal">
+    <h1>ADD NEW EMPLOYEE</h1>
+    <app-add-employee></app-add-employee>
+
+    <button class="btn btn-secondary btn-modal" (click)="employeeModal.close()">CLOSE</button>
+</ngx-smart-modal>

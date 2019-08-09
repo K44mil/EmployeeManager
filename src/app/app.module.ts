@@ -16,6 +16,7 @@ import { AddRoomComponent } from './_components/add-room/add-room.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AddPositionComponent } from './_components/add-position/add-position.component';
+import { AddEmployeeComponent } from './_components/add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AddPositionComponent } from './_components/add-position/add-position.co
     RoomsTableComponent,
     PositionsTableComponent,
     AddRoomComponent,
-    AddPositionComponent
+    AddPositionComponent,
+    AddEmployeeComponent
   ],
   imports: [
     BrowserModule,
