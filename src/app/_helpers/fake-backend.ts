@@ -63,6 +63,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getRooms() {
+            updateOccupiedPlaces();
             return ok(rooms);
         }
 
@@ -125,6 +126,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function idFromUrl() {
             const urlParts = url.split('/');
             return parseInt(urlParts[urlParts.length - 1]);
+        }
+
+        function updateOccupiedPlaces() {
+            console.log('Hello to updateOccupiedPlaces function');
+            
+            rooms.forEach(room => {
+                room.occupiedPlaces = 0;
+            });
+
+            rooms.forEach(room => {
+                employees.forEach(employee => {
+                    if (employee.room.id === room.id) {
+                        room.occupiedPlaces = room.occupiedPlaces + 1;
+                    }
+                });
+            });
+            localStorage.setItem('rooms', JSON.stringify(rooms));
         }
     }
 }
