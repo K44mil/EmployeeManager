@@ -70,7 +70,10 @@ export class AddEmployeeComponent implements OnInit {
 
     this.employeeService.save(this.employeeForm.value)
       .pipe(first())
-      .subscribe();
+      .subscribe(() => this.loadRooms());
+
+    this.employeeForm.reset();
+    
   }
   
   // useless functions ( at this time )

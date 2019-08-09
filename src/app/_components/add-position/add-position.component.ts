@@ -37,6 +37,8 @@ export class AddPositionComponent implements OnInit {
     this.positionService.save(this.positionForm.value)
       .pipe(first())
       .subscribe();
+
+    this.positionForm.reset()
   }
 
 }

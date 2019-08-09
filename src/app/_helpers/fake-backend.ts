@@ -8,12 +8,14 @@ import { ROOMS } from '../_database/mock-rooms';
 import { POSITIONS } from '../_database/mock-positions';
 import { EMPLOYEES } from '../_database/mock-employees';
 
-// put data to local storage
-localStorage.setItem('rooms', JSON.stringify(ROOMS));
-localStorage.setItem('positions', JSON.stringify(POSITIONS));
-localStorage.setItem('employees', JSON.stringify(EMPLOYEES));
+// // put data to local storage
 
-// load data from local storage
+// localStorage.setItem('rooms', JSON.stringify(ROOMS));
+// localStorage.setItem('positions', JSON.stringify(POSITIONS));
+// localStorage.setItem('employees', JSON.stringify(EMPLOYEES));
+
+
+// // load data from local storage
 let employees = JSON.parse(localStorage.getItem('employees')) || [];
 let rooms = JSON.parse(localStorage.getItem('rooms')) || [];
 let positions = JSON.parse(localStorage.getItem('positions')) || [];

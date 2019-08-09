@@ -1,4 +1,83 @@
 <br><br>
+
+<div class="container">
+    
+    <button class="btn btn-primary btn-sort" (click)="openOrCloseFilter()">FILTER</button>
+    
+    <div *ngIf="isFilterOpen" class="filter-box">   
+        <div class="card">
+            <article class="card-group-item">
+                <!-- Form -->
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" class="form-control" id="firstName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control" id="lastName">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="position">Position</label>
+                                            <!-- <input type="text" class="form-control" id="position"> -->
+                                            <select id="position" class="form-control">
+                                                <option></option>
+                                                <option>TEST</option>
+                                                <option>TEST</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="room">Room</label>
+                                            <!-- <input type="text" class="form-control" id="room"> -->
+                                            <select id="room" class="form-control">
+                                                    <option></option>
+                                                    <option>TEST</option>
+                                                    <option>TEST</option>
+                                                </select>
+                                        </div>
+                                    </div>                                                                
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="minSalary">Minimal salary</label>
+                                            <input type="text" class="form-control" id="minSalary">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="maxSalary">Maximal salary</label>
+                                            <input type="text" class="form-control" id="maxSalary">
+                                        </div>
+                                    </div>                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <button class="btn btn-warning filter-btn">RESET</button>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <button class="btn btn-success filter-btn">FILTER</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>          
+            </article>
+        </div> 
+    </div>      
+</div>
+
+
 <div class="container">
     <table class="table table-striped">
         <thead class="thead-dark">
@@ -35,3 +114,6 @@
 
     <button class="btn btn-secondary btn-modal" (click)="employeeModal.close()">CLOSE</button>
 </ngx-smart-modal>
+
+<br>
+<button class="btn btn-info" (click)="sortuj()">SORTUJ</button>

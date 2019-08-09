@@ -36,5 +36,7 @@ export class AddRoomComponent implements OnInit {
     this.roomService.save(this.roomForm.value)
       .pipe(first())
       .subscribe();
+
+    this.roomForm.reset();
   }
 }
