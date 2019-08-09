@@ -1,19 +1,46 @@
 <div>
-    <form [formGroup]="positionGroup" (ngSubmit)="onSubmit()">
+    <form [formGroup]="positionForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Position name</label>
-            <input type="text" class="form-control" id="name" formControlname="name">
+            <input type="text" class="form-control" id="name" formControlName="name">
             <!-- Validation alerts -->
+            <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)" class="text-danger">
+                <div *ngIf="f.name.errors?.required">
+                    Position name is required.
+                </div>
+                <div *ngIf="f.name.errors?.pattern">
+                    Position name should not contains numbers.
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="minWage">Minimal wage</label>
             <input type="text" class="form-control" id="minWage" formControlName="minWage">
             <!-- Validation alerts -->
+            <div *ngIf="f.minWage.invalid && (f.minWage.dirty || f.minWage.touched)" class="text-danger">
+                <div *ngIf="f.minWage.errors?.required">
+                    Minimal wage is required.
+                </div>
+                <div *ngIf="f.minWage.errors?.pattern">
+                    Minimal wage should be a numeric value.
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="maxWage">Maximal wage</label>
             <input type="text" class="form-control" id="maxWage" formControlName="maxWage">
             <!-- Validation alerts -->
+            <div *ngIf="f.maxWage.invalid && (f.maxWage.dirty || f.maxWage.touched)" class="text-danger">
+                <div *ngIf="f.maxWage.errors?.required">
+                    Maximal wage is required.
+                </div>
+                <div *ngIf="f.maxWage.errors?.pattern">
+                    Maximal wage should be a numeric value.
+                </div>
+                <div *ngIf="f.maxWage.errors?.invalidValue">
+                    Maximal wage should be greater or equal minimal wage.
+                </div>
+            </div>
         </div>
         <button type="submit" [disabled]="this.positionForm.invalid" class="btn btn-success">ADD</button>
     </form>

@@ -17,4 +17,8 @@ export class PositionService {
   delete(id: number) {
     return this.http.delete(`${this.positionsUrl}/${id}`);
   }
+
+  save(position: Position) {
+    return this.http.post(`${this.positionsUrl}/addPosition`, position);
+  }
 }
