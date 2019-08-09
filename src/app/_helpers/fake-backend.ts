@@ -47,10 +47,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return deleteEmployee();
                 // case url.match(/\/positions\/\d+$/) && method === 'GET':
                 //     return getPositionById();
-                case url.endsWith('/addRoom') && method === 'POST':
+                case url.endsWith('/rooms') && method === 'POST':
                     return addRoom();
-                case url.endsWith('/addPosition') && method === 'POST':
+                case url.endsWith('/positions') && method === 'POST':
                     return addPosition();
+                case url.endsWith('/employees') && method === 'POST':
+                    return addEmployee();
                 default:
                     return next.handle(request);
             }
@@ -120,6 +122,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             position.id = positions.length ? Math.max(...positions.map(x => x.id)) + 1 : 1;
             positions.push(position);
             localStorage.setItem('positions', JSON.stringify(positions));
+
+            return ok();
+        }
+
+        function addEmployee() {
+            const employee = body;
+
+            employee.id = employees.length ? Math.max(...employees.map(x => x.id)) +1 : 1;
+            employees.push(employee);
+            localStorage.setItem('employees', JSON.stringify(employees));
 
             return ok();
         }

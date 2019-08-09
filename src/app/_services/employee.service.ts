@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Employee } from '../_models/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,9 @@ export class EmployeeService {
 
   delete(id: number) {
     return this.http.delete(`${this.employeeUrl}/${id}`);
+  }
+
+  save(employee: Employee) {
+    return this.http.post(`${this.employeeUrl}`, employee);
   }
 }

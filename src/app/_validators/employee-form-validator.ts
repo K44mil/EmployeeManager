@@ -34,26 +34,7 @@ export const EmployeeFormValidator =
             salary.setErrors({ salaryNotMatch: null });
             salary.updateValueAndValidity({ onlySelf: true });
         }
-
-        // console.log(minWage);
         
-        //     if(salaryValue < minWage || salaryValue > maxWage) {
-
-        //         salary.setErrors({ salaryNotMatch: true });
-        //         return null;
-        //     }
-        
-
-        // if (roomCapacity !== null && roomOccupiedPlaces !== null) {
-        //     if(roomCapacity - roomOccupiedPlaces === 0) {
-
-        //         room.setErrors({ noFreePlaces: true });
-        //         return null;
-        //     }
-        // }
-        
-        // room.setErrors({ noFreePlaces: true });
-        // room.updateValueAndValidity({ onlySelf: true });
         return null;
     }
 }

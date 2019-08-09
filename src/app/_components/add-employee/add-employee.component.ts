@@ -68,8 +68,12 @@ export class AddEmployeeComponent implements OnInit {
       return;
     }
 
-    // TODO: this.employeeService.save() 
+    this.employeeService.save(this.employeeForm.value)
+      .pipe(first())
+      .subscribe();
   }
+  
+  // useless functions ( at this time )
 
   getPosition(id: number) {
     if (this.positions) {

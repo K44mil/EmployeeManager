@@ -22,7 +22,7 @@ export class RoomService {
   }
 
   save(room: Room) {
-    return this.http.post(`${this.roomsUrl}/addRoom`, room);
+    return this.http.post(`${this.roomsUrl}`, room);
   }
 
   getNumberOfEmployeesInRoom(id: number) {

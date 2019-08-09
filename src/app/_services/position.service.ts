@@ -19,7 +19,7 @@ export class PositionService {
   }
 
   save(position: Position) {
-    return this.http.post(`${this.positionsUrl}/addPosition`, position);
+    return this.http.post(`${this.positionsUrl}`, position);
   }
 
   // getPositionById(id: number) {
