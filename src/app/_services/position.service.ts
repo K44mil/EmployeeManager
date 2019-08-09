@@ -21,4 +21,8 @@ export class PositionService {
   save(position: Position) {
     return this.http.post(`${this.positionsUrl}/addPosition`, position);
   }
+
+  // getPositionById(id: number) {
+  //   return this.http.get<any[]>(`${this.positionsUrl}/${id}`);
+  // }
 }

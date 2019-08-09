@@ -27,7 +27,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize())
-            .pipe(delay(100))
+            .pipe(delay(0))
             .pipe(dematerialize());
        
         
@@ -45,6 +45,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return deleteRoom();
                 case url.match(/\/employees\/\d+$/) && method === 'DELETE':
                     return deleteEmployee();
+                // case url.match(/\/positions\/\d+$/) && method === 'GET':
+                //     return getPositionById();
                 case url.endsWith('/addRoom') && method === 'POST':
                     return addRoom();
                 case url.endsWith('/addPosition') && method === 'POST':
@@ -74,6 +76,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // GET BY ID functions
             // --TODO--
         
+        // function getPositionById() {
+        //     const position = positions.filter(x => x.id === idFromUrl());
+        //     return ok(position);
+        // }
+
         // DELETE functions
 
         function deletePosition() {
@@ -129,7 +136,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function updateOccupiedPlaces() {
-            console.log('Hello to updateOccupiedPlaces function');
+            // console.log('Hello - updateOccupiedPlaces function');
             
             rooms.forEach(room => {
                 room.occupiedPlaces = 0;
