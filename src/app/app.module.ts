@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoMaterialModule } from './material.module';
 
 // import fake backend provider 
 import { fakeBackendProvider } from './_helpers/fake-backend';
@@ -18,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AddPositionComponent } from './_components/add-position/add-position.component';
 import { AddEmployeeComponent } from './_components/add-employee/add-employee.component';
+import { SidenavComponent } from './_components/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { AddEmployeeComponent } from './_components/add-employee/add-employee.co
     PositionsTableComponent,
     AddRoomComponent,
     AddPositionComponent,
-    AddEmployeeComponent
+    AddEmployeeComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,9 @@ import { AddEmployeeComponent } from './_components/add-employee/add-employee.co
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    DemoMaterialModule
   ],
   providers: [
     fakeBackendProvider,
