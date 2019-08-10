@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { SideNavComponent } from './_components/side-nav/side-nav.component';
+import { EmployeesFilterComponent } from './_components/employees-filter/employees-filter.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SideNavComponent } from './_components/side-nav/side-nav.component';
     AddPositionComponent,
     AddEmployeeComponent,
     SideNavComponent,
+    EmployeesFilterComponent,
   ],
   imports: [
     BrowserModule,

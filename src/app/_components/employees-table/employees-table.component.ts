@@ -23,6 +23,9 @@ export class EmployeesTableComponent implements OnInit {
   employeesPerPage: number = 5;
   // !--Pagination values
 
+  // Filter values
+  filterValue: any = null;
+
   constructor(
     private employeeService: EmployeeService,
     private positionService: PositionService) { }
@@ -64,6 +67,11 @@ export class EmployeesTableComponent implements OnInit {
 
   openOrCloseFilter() {
     this.isFilterOpen = !this.isFilterOpen;
+  }
+
+  getValue($event) {
+    this.filterValue = $event;
+    //console.log(this.filterValue + "--- received");
   }
 
 }
