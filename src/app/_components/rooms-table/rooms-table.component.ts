@@ -14,6 +14,11 @@ export class RoomsTableComponent implements OnInit {
 
   rooms: Room[] = null;
 
+  // Pagination values
+  currentPage: number = 1;
+  roomsPerPage: number = 5;
+  // !--Pagination values
+
   constructor(
     private roomService: RoomService,
     private ngxSmartModalService: NgxSmartModalService

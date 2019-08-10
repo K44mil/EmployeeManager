@@ -39,10 +39,10 @@
                                             <label for="room">Room</label>
                                             <!-- <input type="text" class="form-control" id="room"> -->
                                             <select id="room" class="form-control">
-                                                    <option></option>
                                                     <option>TEST</option>
                                                     <option>TEST</option>
-                                                </select>
+                                                    <option>TEST</option>
+                                            </select>
                                         </div>
                                     </div>                                                                
                                 </div>
@@ -91,7 +91,7 @@
             <th scope="col"></th>
         </thead>
         <tbody>
-            <tr *ngFor="let employee of employees">
+            <tr *ngFor="let employee of employees | paginate: { itemsPerPage: employeesPerPage, currentPage: currentPage }">
                 <td>{{ employee.id }}</td>
                 <td>{{ employee.firstName }}</td>
                 <td>{{ employee.lastName }}</td>
@@ -103,6 +103,11 @@
             </tr>
         </tbody>
     </table>
+    <!-- Pagination controls -->
+    <div class="pagination-ctrl">
+        <pagination-controls nextLabel="" previousLabel="" (pageChange)="currentPage = $event"></pagination-controls>
+    </div>  
+    <!-- @@@ -->
     <div>
         <button class="btn btn-success" (click)="employeeModal.open()">ADD NEW EMPLOYEE</button>
     </div>

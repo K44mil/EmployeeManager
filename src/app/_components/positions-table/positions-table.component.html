@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let position of positions">
+            <tr *ngFor="let position of positions | paginate: { itemsPerPage: positionsPerPage, currentPage: currentPage }">
                 <td>{{ position.id }}</td>
                 <td>{{ position.name }}</td>    
                 <td>{{ position.minWage | currency }}</td>
@@ -22,6 +22,11 @@
             </tr>
         </tbody>
     </table>
+    <!-- Pagination controls -->
+    <div class="pagination-ctrl">
+        <pagination-controls nextLabel="" previousLabel="" (pageChange)="currentPage = $event"></pagination-controls>
+    </div>  
+    <!-- @@@ -->
     <div class="container">
         <button class="btn btn-success" (click)="addPosition()">ADD NEW POSITION</button>
     </div>

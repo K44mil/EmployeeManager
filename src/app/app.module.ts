@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // import fake backend provider 
 import { fakeBackendProvider } from './_helpers/fake-backend';
@@ -35,7 +36,8 @@ import { AddEmployeeComponent } from './_components/add-employee/add-employee.co
     HttpClientModule,
     NgxSmartModalModule.forRoot(),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     fakeBackendProvider,

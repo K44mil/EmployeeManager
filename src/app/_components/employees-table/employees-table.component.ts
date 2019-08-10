@@ -18,6 +18,11 @@ export class EmployeesTableComponent implements OnInit {
   employees: Employee[] = null;
   isFilterOpen: boolean = false;
 
+  // Pagination values
+  currentPage: number = 1;
+  employeesPerPage: number = 5;
+  // !--Pagination values
+
   constructor(
     private employeeService: EmployeeService,
     private positionService: PositionService) { }

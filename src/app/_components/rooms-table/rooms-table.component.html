@@ -13,7 +13,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let room of rooms">
+                    <tr *ngFor="let room of rooms | paginate: { itemsPerPage: roomsPerPage, currentPage: currentPage }">
                         <td>{{ room.id }}</td>
                         <td>{{ room.number }}</td>
                         <td>{{ room.name }}</td>
@@ -24,6 +24,11 @@
                 </tbody>
             </table>
         </div>
+        <!-- Pagination controls -->
+        <div class="pagination-ctrl">
+            <pagination-controls nextLabel="" previousLabel="" (pageChange)="currentPage = $event"></pagination-controls>
+        </div>  
+        <!-- @@@ -->
         <div class="container">
             <button class="btn btn-success" (click)="addRoom()">ADD NEW ROOM</button>
         </div>

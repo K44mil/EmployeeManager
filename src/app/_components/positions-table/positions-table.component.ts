@@ -14,6 +14,11 @@ export class PositionsTableComponent implements OnInit {
 
   positions: Position[] = null;
 
+  // Pagination values
+  currentPage: number = 1;
+  positionsPerPage: number = 5;
+  // !--Pagination values
+
   constructor(
     private positionService: PositionService,
     private ngxSmartModalService: NgxSmartModalService
