@@ -20,7 +20,7 @@ export class EmployeesTableComponent implements OnInit {
 
   // Pagination values
   currentPage: number = 1;
-  employeesPerPage: number = 15;
+  employeesPerPage: number = 5;
   // !--Pagination values
 
   constructor(

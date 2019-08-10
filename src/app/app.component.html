@@ -1,16 +1,31 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+
+<!-- <div style="text-align: center">
+    <h1>
+      Welcome to {{ title }}!
+    </h1>
+    <nav>
+      <a routerLink="/">Home</a>|
+      <a routerLink="/employees">Employees</a>|
+      <a routerLink="/rooms">Rooms</a>|
+      <a routerLink="/positions">Positions</a>
+    </nav>
+    <router-outlet></router-outlet>
+</div> -->
+
+<app-side-nav>
+  <div style="text-align: center">
+      <router-outlet></router-outlet>
+  </div>
   
-  <!-- <nav>
-    <a routerLink="/">Home</a>|
-    <a routerLink="/employees">Employees</a>|
-    <a routerLink="/rooms">Rooms</a>|
-    <a routerLink="/positions">Positions</a>
-  </nav> -->
-  <app-sidenav></app-sidenav>
-  <!-- <router-outlet></router-outlet> -->
+</app-side-nav>
+
+  
+
+
+  
+
+
+
+
 
 
