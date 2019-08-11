@@ -20,9 +20,9 @@
                                     <div class="form-group">
                                         <label for="position">Position</label>
                                         <!-- <input type="text" class="form-control" id="position"> -->
-                                        <select id="position" class="form-control" formControlName="position">
-                                            <option value="null"></option>
-                                            <option *ngFor="let position of positions">{{ position.name }}</option>                 
+                                        <select id="position" class="form-control" formControlName="position" [compareWith]="comparePositions">
+                                            <option [ngValue]="null"></option>
+                                            <option *ngFor="let position of positions" [ngValue]="position">{{ position.name }}</option>                 
                                         </select>
                                     </div>
                                 </div>
@@ -30,9 +30,9 @@
                                     <div class="form-group">
                                         <label for="room">Room</label>
                                         <!-- <input type="text" class="form-control" id="room"> -->
-                                        <select id="room" class="form-control" formControlName="room"> 
-                                                <option value="null"></option>
-                                                <option *ngFor="let room of rooms">{{ room.number }}</option>
+                                        <select id="room" class="form-control" formControlName="room" [compareWith]="compareRooms"> 
+                                                <option [ngValue]="null"></option>
+                                                <option *ngFor="let room of rooms" [ngValue]="room">{{ room.number }}</option>
                                         </select>
                                     </div>
                                 </div>                                                                
@@ -55,7 +55,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-6">
-                            <button class="btn btn-warning filter-btn" (click)="onClickReset()">RESET</button>
+                            <button type="button" class="btn btn-warning filter-btn" (click)="onClickReset()">RESET</button>
                         </div>
                         <div class="col-12 col-md-6">
                             <button type="submit" class="btn btn-success filter-btn">FILTER</button>

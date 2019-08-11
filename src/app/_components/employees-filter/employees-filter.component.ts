@@ -25,6 +25,7 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
   @Input() filterFormValueInput: any;
 
   employeesFilterForm: FormGroup;
+  filterValueObj = null;
 
   constructor(
     private employeeService: EmployeeService,
@@ -46,13 +47,8 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
     });
 
     if (this.filterFormValueInput) {
-      let filterValueObj = JSON.parse(this.filterFormValueInput);
-
-      this.employeesFilterForm.controls.position.setValue(filterValueObj.position);
-
-      this.employeesFilterForm.setValue(filterValueObj);
-      console.log(JSON.stringify(this.employeesFilterForm.value));
-      
+      this.filterValueObj = JSON.parse(this.filterFormValueInput);
+      this.employeesFilterForm.setValue(this.filterValueObj);
     }
     
   }
@@ -60,7 +56,6 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
   get f() { return this.employeesFilterForm.controls; }
 
   ngOnDestroy() {
-    //console.log(JSON.stringify(this.employeesFilterForm.value) + '--- emitted');
     this.destroyEvent.emit(JSON.stringify(this.employeesFilterForm.value));
   }
 
@@ -83,7 +78,15 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
   }
 
   onClickFilter() {
-    console.log(this.employeesFilterForm.controls.firstName.value);
+    console.log(this.employeesFilterForm.value);
+  }
+
+  compareRooms(r1: Room, r2: Room): boolean {
+    return r1 && r2 ? r1.id === r2.id : r1 === r2;
+  }
+
+  comparePositions(p1: Position, p2: Position): boolean {
+    return p1 && p2 ?  p1.id === p2.id : p1 === p2;
   }
 
 }
