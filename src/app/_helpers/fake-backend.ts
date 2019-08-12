@@ -7,6 +7,8 @@ import { delay, mergeMap, materialize, dematerialize, refCount } from 'rxjs/oper
 import { ROOMS } from '../_database/mock-rooms';
 import { POSITIONS } from '../_database/mock-positions';
 import { EMPLOYEES } from '../_database/mock-employees';
+import { EditEmployeeComponent } from '../_components/edit-employee/edit-employee.component';
+import { Employee } from '../_models/employee';
 
 // // put data to local storage
 
@@ -59,6 +61,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return editRoom();
                 case url.match(/\/positions\/\d+$/) && method === 'PUT':
                     return editPosition();
+                case url.match(/\/employees\/\d+$/) && method === 'PUT':
+                    return editEmployee();
                 default:
                     return next.handle(request);
             }
@@ -172,6 +176,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
 
             localStorage.setItem('positions', JSON.stringify(positions));
+
+            return ok();
+        }
+
+        function editEmployee() {
+            const employee = body;
+
+            employees.forEach(e => {
+                if (e.id === idFromUrl()) {
+                    e.firstName = employee.firstName;
+                    e.lastName = employee.lastName;
+                    e.room = employee.room;
+                    e.position = employee.position;
+                    e.salary = employee.salary;
+                }
+            });
+
+            localStorage.setItem('employees', JSON.stringify(employees));
 
             return ok();
         }

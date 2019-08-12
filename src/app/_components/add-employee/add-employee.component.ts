@@ -75,8 +75,6 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeForm.reset();
     
   }
-  
-  // useless functions ( at this time )
 
   getPosition(id: number) {
     if (this.positions) {

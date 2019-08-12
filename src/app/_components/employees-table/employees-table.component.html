@@ -27,7 +27,7 @@
                 <td>{{ employee.position.name }}</td>
                 <td>{{ employee.room.number }}</td>
                 <td>{{ employee.salary | currency }}</td>
-                <td><button class="btn btn-primary">EDIT</button></td>
+                <td><button (click)="editEmployee(employee.id)" class="btn btn-primary">EDIT</button></td>
                 <td><button (click)="deleteEmployee(employee.id)" class="btn btn-danger">DELETE</button></td>
             </tr>
         </tbody>
@@ -49,12 +49,13 @@
     <button class="btn btn-secondary btn-modal" (click)="employeeModal.close()">CLOSE</button>
 </ngx-smart-modal>
 
-<!-- <ngx-smart-modal>
+<ngx-smart-modal #employeeEditModal identifier="employeeEditModal">
     <h1>EDIT EMPLOYEE</h1>
-</ngx-smart-modal> -->
+    <app-edit-employee *ngIf="this.selectedEmployee" [employee]="this.selectedEmployee"></app-edit-employee>
 
+    <button class="btn btn-secondary btn-modal" (click)="employeeEditModal.close()">CLOSE</button>
+</ngx-smart-modal>
 
 
 <br>
 <button class="btn btn-info" (click)="sortuj()">SORTUJ</button>
-<button class="btn btn-warn" (click)="showMessage()">SHOW</button>

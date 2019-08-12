@@ -6,6 +6,7 @@ import { Employee } from '../../_models/employee';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Position } from '../../_models/position';
 import { PositionService } from 'src/app/_services/position.service';
+import { DataService } from 'src/app/_services/data.service';
 
 @Component({
   selector: 'app-employees-table',
@@ -26,9 +27,14 @@ export class EmployeesTableComponent implements OnInit {
   // Filter values
   filterValue: any = null;
 
+  //--
+  selectedEmployee: Employee;
+
   constructor(
     private employeeService: EmployeeService,
-    private positionService: PositionService) { }
+    private positionService: PositionService,
+    private dataService: DataService,
+    private ngxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
     this.loadEmployees();
@@ -53,6 +59,13 @@ export class EmployeesTableComponent implements OnInit {
       .subscribe(() => this.loadEmployees());
   }
 
+  editEmployee(id: number) {
+    let employeeToEdit = this.employees.filter(employee => employee.id === id);
+
+    this.selectedEmployee = employeeToEdit[0];
+    this.dataService.setEmployeeToEdit(this.selectedEmployee);
+    this.ngxSmartModalService.getModal('employeeEditModal').open();
+  }
   //--------------
 
   sortByName(x, y) {

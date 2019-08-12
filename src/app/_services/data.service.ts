@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Room } from '../_models/room';
 import { Position } from '../_models/position';
+import { Employee } from '../_models/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ export class DataService {
 
   private roomToEdit: Room;
   private positionToEdit: Position;
-  
+  private employeeToEdit: Employee;
+
   constructor() { }
 
   setRoomToEdit(room: Room) {
@@ -26,5 +28,13 @@ export class DataService {
 
   getPositionToEdit(): Position {
     return this.positionToEdit;
+  }
+
+  setEmployeeToEdit(employee: Employee) {
+    this.employeeToEdit = employee;
+  }
+
+  getEmployeeToEdit() {
+    return this.employeeToEdit;
   }
 }

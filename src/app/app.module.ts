@@ -29,6 +29,7 @@ import { SideNavComponent } from './_components/side-nav/side-nav.component';
 import { EmployeesFilterComponent } from './_components/employees-filter/employees-filter.component';
 import { EditRoomComponent } from './_components/edit-room/edit-room.component';
 import { EditPositionComponent } from './_components/edit-position/edit-position.component';
+import { EditEmployeeComponent } from './_components/edit-employee/edit-employee.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EditPositionComponent } from './_components/edit-position/edit-position
     EmployeesFilterComponent,
     EditRoomComponent,
     EditPositionComponent,
+    EditEmployeeComponent,
   ],
   imports: [
     BrowserModule,
