@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material';
+import { ChartsModule } from 'ng2-charts';
 
 // import fake backend provider 
 import { fakeBackendProvider } from './_helpers/fake-backend';
@@ -61,7 +62,8 @@ import { EditEmployeeComponent } from './_components/edit-employee/edit-employee
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    ChartsModule
   ],
   providers: [
     fakeBackendProvider,
