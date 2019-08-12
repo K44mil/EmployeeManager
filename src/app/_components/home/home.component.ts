@@ -12,13 +12,12 @@ export class HomeComponent implements OnInit {
     responsive: true
   }
 
-  public barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType = 'bar';
+  public barChartLabels = ['Programmer', 'Recepcionist', 'Project Manager', 'Free space'];
+  public barChartType = 'doughnut';
   public barChartLegend = 'true';
 
   public barChartData = [
-    {data: [65, 59, 90, 81, 56, 55, 40], label: 'Seria A'},
-    {data: [55, 53, 95, 85, 52, 51, 49], label: 'Seria B'}
+    {data: [4, 2, 1, 3], label: 'Room usage'}
   ];
 
   constructor() { }
@@ -27,5 +26,13 @@ export class HomeComponent implements OnInit {
     
   }
 
+  changeChartType() {
+    if (this.barChartType === 'doughnut')
+      this.barChartType = 'pie';
+    else if (this.barChartType === 'pie')
+      this.barChartType = 'polarArea'
+    else
+      this.barChartType = 'doughnut';
+  }
 
 }
