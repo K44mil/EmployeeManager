@@ -1,3 +1,13 @@
 .btn-modal {
   margin-top: 5px;
 }
+.btn-sort {
+  margin-bottom: 10px;
+}
+.filter-box {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.pagination-ctrl {
+  margin: 5px auto;
+}

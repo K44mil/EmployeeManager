@@ -5,7 +5,7 @@ import { PositionService } from 'src/app/_services/position.service';
 import { Position } from 'src/app/_models/position';
 import { Employee } from 'src/app/_models/employee';
 import { Room } from 'src/app/_models/room';
-import { first } from 'rxjs/operators';
+import { first, filter } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -47,7 +47,9 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
       position: [''],
       room: [''],
       minSalary: [''],
-      maxSalary: ['']
+      maxSalary: [''],
+      sortParam: [''],
+      sortOrder: ['']
     });
 
     if (this.filterFormValueInput) {
@@ -102,6 +104,10 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
     let minSalaryValue = this.f.minSalary.value;
     let maxSalaryValue = this.f.maxSalary.value;
 
+    // sort
+    let sortParamValue = this.f.sortParam.value;
+    let sortOrderValue = this.f.sortOrder.value;
+
     let filteredEmployees = this.employees;
     // filter employees
 
@@ -124,7 +130,102 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
       filteredEmployees = filteredEmployees.filter(employee => employee.salary <= Number.parseInt(maxSalaryValue));
     }
     
+    if (sortParamValue !== null && sortParamValue !== undefined && sortParamValue !== '') {
+      
+      if (sortOrderValue === null || sortOrderValue === undefined || sortOrderValue === '') {
+        sortOrderValue = 'asc';
+      }    
+
+      if(sortOrderValue === 'asc') {
+        switch (sortParamValue) {
+          case 'firstname':
+              filteredEmployees.sort(this.sortByFirstNameASC);
+          break;
+
+          case 'lastname':
+              filteredEmployees.sort(this.sortByLastNameASC);
+          break;
+
+          case 'position':
+              filteredEmployees.sort(this.sortByPositionASC);
+          break;
+
+          case 'room':
+              filteredEmployees.sort(this.sortByRoomASC);
+          break;
+
+          case 'salary':
+              filteredEmployees.sort(this.sortBySalaryASC);
+          break;
+        }
+      } else if (sortOrderValue === 'desc') {
+        switch (sortParamValue) {
+          case 'firstname':
+              filteredEmployees.sort(this.sortByFirstNameDESC);
+          break;
+
+          case 'lastname':
+              filteredEmployees.sort(this.sortByLastNameDESC);
+          break;
+
+          case 'position':
+              filteredEmployees.sort(this.sortByPositionDESC);
+          break;
+
+          case 'room':
+              filteredEmployees.sort(this.sortByRoomDESC);
+          break;
+
+          case 'salary':
+              filteredEmployees.sort(this.sortBySalaryDESC);
+          break;
+        }
+      }   
+    }
+
     this.filterEvent.emit(filteredEmployees);
+  }
+
+  // sort functions
+
+  sortByFirstNameASC(e1, e2) {
+    return ((e1.firstName == e2.firstName) ? 0 : ((e1.firstName > e2.firstName) ? 1 : -1 ));
+  }
+
+  sortByFirstNameDESC(e1, e2) {
+    return ((e1.firstName == e2.firstName) ? 0 : ((e1.firstName > e2.firstName) ? -1 : 1 ));
+  }
+
+  sortByLastNameASC(e1, e2) {
+    return ((e1.lastName == e2.lastName) ? 0 : ((e1.lastName > e2.lastName) ? 1 : -1 ));
+  }
+
+  sortByLastNameDESC(e1, e2) {
+    return ((e1.lastName == e2.lastName) ? 0 : ((e1.lastName > e2.lastName) ? -1 : 1 ));
+  }
+
+  sortByPositionASC(e1, e2) {
+    return ((e1.position.name == e2.position.name) ? 0 : ((e1.position.name > e2.position.name) ? 1 : -1 ));
+  }
+
+  sortByPositionDESC(e1, e2) {
+    return ((e1.position.name == e2.position.name) ? 0 : ((e1.position.name > e2.position.name) ? -1 : 1 ));
+  }
+
+  sortByRoomASC(e1, e2) {
+    return ((e1.room.number == e2.room.number) ? 0 : ((e1.room.number > e2.room.number) ? 1 : -1 ));
+  }
+
+  sortByRoomDESC(e1, e2) {
+    return ((e1.room.number == e2.room.number) ? 0 : ((e1.room.number > e2.room.number) ? -1 : 1 ));
+  }
+
+  sortBySalaryASC(e1, e2) {
+    return ((e1.salary == e2.salary) ? 0 : ((e1.salary > e2.salary) ? 1 : -1 ));
+  }
+
+  sortBySalaryDESC(e1, e2) {
+    return ((e1.salary == e2.salary) ? 0 : ((e1.salary > e2.salary) ? -1 : 1 ));
   }
 
 }

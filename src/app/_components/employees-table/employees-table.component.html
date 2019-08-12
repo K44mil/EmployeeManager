@@ -1,8 +1,8 @@
 <br><br>
 
-<div class="container">
+    <button class="btn btn-primary btn-sort" (click)="openOrCloseFilter()">FILTER</button>
 
-<button class="btn btn-primary btn-sort" (click)="openOrCloseFilter()">FILTER</button>
+<div class="container">
 
 <div *ngIf="isFilterOpen" class="filter-box"> 
     <app-employees-filter (destroyEvent)="getValue($event)" [filterFormValueInput]="this.filterValue" (filterEvent)="setFilteredEmployees($event)"></app-employees-filter>
@@ -41,6 +41,7 @@
         <button class="btn btn-success" (click)="employeeModal.open()">ADD NEW EMPLOYEE</button>
     </div>
 </div>
+</div>
 
 <ngx-smart-modal #employeeModal identifier="employeeModal">
     <h1>ADD NEW EMPLOYEE</h1>
@@ -55,7 +56,3 @@
 
     <button class="btn btn-secondary btn-modal" (click)="employeeEditModal.close()">CLOSE</button>
 </ngx-smart-modal>
-
-
-<br>
-<button class="btn btn-info" (click)="sortuj()">SORTUJ</button>

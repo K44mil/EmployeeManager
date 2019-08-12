@@ -66,17 +66,6 @@ export class EmployeesTableComponent implements OnInit {
     this.dataService.setEmployeeToEdit(this.selectedEmployee);
     this.ngxSmartModalService.getModal('employeeEditModal').open();
   }
-  //--------------
-
-  sortByName(x, y) {
-    return ((x.firstName == y.firstName) ? 0 : ((x.firstName > y.firstName) ? 1 : -1 ));
-  }
-
-  sortuj() {
-    this.employees.sort(this.sortByName);
-  }
-
-  //-----------
 
   openOrCloseFilter() {
     this.isFilterOpen = !this.isFilterOpen;
