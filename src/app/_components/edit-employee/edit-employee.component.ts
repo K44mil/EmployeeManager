@@ -80,7 +80,12 @@ export class EditEmployeeComponent implements OnInit, OnChanges {
         position: this.employee.position,
         salary: this.employee.salary
       });
+
+      this.choosenPosition = this.employee.position;
+      this.choosenRoom = this.employee.room;
     }
+
+    
   }
 
   getPosition(id: number) {
