@@ -74,4 +74,8 @@ export class EmployeesTableComponent implements OnInit {
     //console.log(this.filterValue + "--- received");
   }
 
+  setFilteredEmployees($event) {
+    this.employees = $event;
+  }
+
 }

@@ -27,6 +27,10 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
   employeesFilterForm: FormGroup;
   filterValueObj = null;
 
+  // Employees to filter
+  filteredEmployees: Employee[] = null;
+  @Output() filterEvent = new EventEmitter<any>();
+
   constructor(
     private employeeService: EmployeeService,
     private roomService: RoomService,
@@ -77,9 +81,9 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
     this.employeesFilterForm.reset();
   }
 
-  onClickFilter() {
-    console.log(this.employeesFilterForm.value);
-  }
+  // onClickFilter() {
+  //   console.log(this.employeesFilterForm.value);
+  // }
 
   compareRooms(r1: Room, r2: Room): boolean {
     return r1 && r2 ? r1.id === r2.id : r1 === r2;
@@ -87,6 +91,40 @@ export class EmployeesFilterComponent implements OnInit, OnDestroy {
 
   comparePositions(p1: Position, p2: Position): boolean {
     return p1 && p2 ?  p1.id === p2.id : p1 === p2;
+  }
+
+  onFilterSubmit() {
+    
+    let firstNameValue = this.f.firstName.value;
+    let lastNameValue = this.f.lastName.value;
+    let positionValue = this.f.position.value;
+    let roomValue = this.f.room.value;
+    let minSalaryValue = this.f.minSalary.value;
+    let maxSalaryValue = this.f.maxSalary.value;
+
+    let filteredEmployees = this.employees;
+    // filter employees
+
+    if (firstNameValue !== null && firstNameValue !== undefined && firstNameValue !== '') {
+      filteredEmployees = filteredEmployees.filter(employee => employee.firstName === firstNameValue);
+    }
+    if (lastNameValue !== null && lastNameValue !== undefined && lastNameValue !== '') {
+      filteredEmployees = filteredEmployees.filter(employee => employee.lastName === lastNameValue);
+    }
+    if (positionValue !== null && positionValue !== undefined && positionValue !== '') {
+      filteredEmployees = filteredEmployees.filter(employee => employee.position.id === positionValue.id);
+    }
+    if (roomValue !== null && roomValue !== undefined && roomValue !== '') {
+      filteredEmployees = filteredEmployees.filter(employee => employee.room.id === roomValue.id);
+    }
+    if (minSalaryValue !== null && minSalaryValue !== undefined && minSalaryValue !== '') {
+      filteredEmployees = filteredEmployees.filter(employee => employee.salary >= Number.parseInt(minSalaryValue));
+    }
+    if (maxSalaryValue !== null && maxSalaryValue !== undefined && maxSalaryValue !== '') {
+      filteredEmployees = filteredEmployees.filter(employee => employee.salary <= Number.parseInt(maxSalaryValue));
+    }
+    
+    this.filterEvent.emit(filteredEmployees);
   }
 
 }

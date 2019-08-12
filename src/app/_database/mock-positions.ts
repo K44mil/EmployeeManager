@@ -4,25 +4,49 @@ export const POSITIONS: Position[] = [
     {
         id: 1,
         name: 'Programmer',
-        minWage: 500,
-        maxWage: 1000
+        minWage: 1500,
+        maxWage: 1800
     },
     {
         id: 2,
         name: 'Project Manager',
-        minWage: 700,
-        maxWage: 1500
+        minWage: 1500,
+        maxWage: 1900
     },
     {
         id: 3,
         name: 'Receptionist',
-        minWage: 400,
-        maxWage: 1000
+        minWage: 800,
+        maxWage: 1200
     },
     {
         id: 4,
         name: 'Marketing Manager',
-        minWage: 650,
-        maxWage: 1200
+        minWage: 1250,
+        maxWage: 1400
+    },
+    {
+        id: 5,
+        name: 'Chief Executive Officer',
+        minWage: 10000,
+        maxWage: 20000
+    },
+    {
+        id: 6,
+        name: 'Project Designer',
+        minWage: 2000,
+        maxWage: 2500
+    },
+    {
+        id: 3,
+        name: 'Senior Programmer',
+        minWage: 1800,
+        maxWage: 2200
+    },
+    {
+        id: 4,
+        name: 'Senior Project Manager',
+        minWage: 1900,
+        maxWage: 2300
     }
 ]

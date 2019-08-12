@@ -35,5 +35,40 @@ export const ROOMS: Room[] = [
         name: 'Room 5',
         capacity: 8,
         occupiedPlaces: 0
+    },
+    {
+        id: 6,
+        number: '106',
+        name: 'Room 6',
+        capacity: 10,
+        occupiedPlaces: 0
+    },
+    {
+        id: 7,
+        number: '107',
+        name: 'Room 7',
+        capacity: 8,
+        occupiedPlaces: 0
+    },
+    {
+        id: 8,
+        number: '108',
+        name: 'Room 8',
+        capacity: 12,
+        occupiedPlaces: 0
+    },
+    {
+        id: 9,
+        number: '109',
+        name: 'Room 9',
+        capacity: 6,
+        occupiedPlaces: 0
+    },
+    {
+        id: 10,
+        number: '110',
+        name: 'Room 10',
+        capacity: 2,
+        occupiedPlaces: 0
     }
 ]
