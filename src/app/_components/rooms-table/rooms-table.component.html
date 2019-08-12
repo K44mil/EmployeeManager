@@ -18,7 +18,7 @@
                         <td>{{ room.number }}</td>
                         <td>{{ room.name }}</td>
                         <td>{{ room.occupiedPlaces }}/{{ room.capacity }}</td>
-                        <td><button class="btn btn-primary">EDIT</button></td>
+                        <td><button (click)="editRoom(room.id)" class="btn btn-primary">EDIT</button></td>
                         <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">DELETE</button></td>
                     </tr>
                 </tbody>
@@ -39,6 +39,14 @@
         <app-add-room></app-add-room>
     
     <button class="btn btn-secondary btn-modal" (click)="roomModal.close()">CLOSE</button>
+</ngx-smart-modal>
+
+<ngx-smart-modal #roomEditModal identifier="roomEditModal">
+    <h1>EDIT ROOM</h1>
+
+    <app-edit-room *ngIf="this.selectedRoom" [room]="this.selectedRoom" ></app-edit-room>
+
+    <button class="btn btn-secondary btn-modal" (click)="roomEditModal.close()">CLOSE</button>
 </ngx-smart-modal>
 
 

@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { SideNavComponent } from './_components/side-nav/side-nav.component';
 import { EmployeesFilterComponent } from './_components/employees-filter/employees-filter.component';
+import { EditRoomComponent } from './_components/edit-room/edit-room.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { EmployeesFilterComponent } from './_components/employees-filter/employe
     AddEmployeeComponent,
     SideNavComponent,
     EmployeesFilterComponent,
+    EditRoomComponent,
   ],
   imports: [
     BrowserModule,

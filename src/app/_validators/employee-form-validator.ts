@@ -13,13 +13,13 @@ export const EmployeeFormValidator =
         const positionValue: Position = position.value;
         const roomValue: Room = room.value;
 
-        if (room) {
+        if (room && roomValue) {
             if(roomValue.capacity - roomValue.occupiedPlaces === 0) {
                 room.setErrors({ busyRoom: true });
             } 
         }
 
-        if (position && salary) {
+        if (position && salary && positionValue && salaryValue) {
             if(salaryValue < positionValue.minWage || salaryValue > positionValue.maxWage) {
 
                 salary.setErrors({ salaryNotMatch: true });

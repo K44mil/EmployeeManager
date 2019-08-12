@@ -38,13 +38,13 @@ export const POSITIONS: Position[] = [
         maxWage: 2500
     },
     {
-        id: 3,
+        id: 7,
         name: 'Senior Programmer',
         minWage: 1800,
         maxWage: 2200
     },
     {
-        id: 4,
+        id: 8,
         name: 'Senior Project Manager',
         minWage: 1900,
         maxWage: 2300

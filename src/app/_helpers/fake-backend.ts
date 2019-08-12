@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError, from } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { delay, mergeMap, materialize, dematerialize, refCount } from 'rxjs/operators';
 
 // import fake-database
 import { ROOMS } from '../_database/mock-rooms';
@@ -55,6 +55,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return addPosition();
                 case url.endsWith('/employees') && method === 'POST':
                     return addEmployee();
+                case url.match(/\/rooms\/\d+$/) && method === 'PUT':
+                    return editRoom();
                 default:
                     return next.handle(request);
             }
@@ -134,6 +136,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             employee.id = employees.length ? Math.max(...employees.map(x => x.id)) +1 : 1;
             employees.push(employee);
             localStorage.setItem('employees', JSON.stringify(employees));
+
+            return ok();
+        }
+
+        // PUT functions
+
+        function editRoom() {
+            const room = body;
+            
+            rooms.forEach(r => {
+                if (r.id === idFromUrl()) {
+                    r.number = room.number;
+                    r.name = room.name;
+                    r.capacity = room.capacity;
+                }
+            });
+
+            localStorage.setItem('rooms', JSON.stringify(rooms));
 
             return ok();
         }
