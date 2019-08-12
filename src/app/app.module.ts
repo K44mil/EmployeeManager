@@ -28,6 +28,7 @@ import { MatListModule } from '@angular/material/list';
 import { SideNavComponent } from './_components/side-nav/side-nav.component';
 import { EmployeesFilterComponent } from './_components/employees-filter/employees-filter.component';
 import { EditRoomComponent } from './_components/edit-room/edit-room.component';
+import { EditPositionComponent } from './_components/edit-position/edit-position.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { EditRoomComponent } from './_components/edit-room/edit-room.component';
     SideNavComponent,
     EmployeesFilterComponent,
     EditRoomComponent,
+    EditPositionComponent,
   ],
   imports: [
     BrowserModule,

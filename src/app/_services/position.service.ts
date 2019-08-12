@@ -25,4 +25,8 @@ export class PositionService {
   // getPositionById(id: number) {
   //   return this.http.get<any[]>(`${this.positionsUrl}/${id}`);
   // }
+
+  update(id: number, position: Position) {
+    return this.http.put(`${this.positionsUrl}/${id}`, position);
+  }
 }

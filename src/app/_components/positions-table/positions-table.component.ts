@@ -4,6 +4,7 @@ import { PositionService } from '../../_services/position.service';
 import { first } from 'rxjs/operators';
 import { Position } from '../../_models/position';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { DataService } from 'src/app/_services/data.service';
 
 @Component({
   selector: 'app-positions-table',
@@ -19,9 +20,12 @@ export class PositionsTableComponent implements OnInit {
   positionsPerPage: number = 5;
   // !--Pagination values
 
+  selectedPosition: Position;
+
   constructor(
     private positionService: PositionService,
-    private ngxSmartModalService: NgxSmartModalService
+    private ngxSmartModalService: NgxSmartModalService,
+    private dataService: DataService
     ) { }
 
   ngOnInit() {
@@ -42,6 +46,14 @@ export class PositionsTableComponent implements OnInit {
 
   addPosition() {
     this.ngxSmartModalService.getModal('positionModal').open();
+  }
+
+  editPosition(id: number) {
+    let positionToEdit = this.positions.filter(position => position.id === id);
+
+    this.selectedPosition = positionToEdit[0];
+    this.dataService.setPositionToEdit(this.selectedPosition);
+    this.ngxSmartModalService.getModal('positionEditModal').open();
   }
 
 }

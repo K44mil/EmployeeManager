@@ -45,9 +45,9 @@ export class RoomsTableComponent implements OnInit {
   }
 
   editRoom(id: number) {
-    let filterRooms = this.rooms.filter(room => room.id === id);
+    let roomToEdit = this.rooms.filter(room => room.id === id);
     // console.log(filterRooms[0]);
-    this.selectedRoom = filterRooms[0];
+    this.selectedRoom = roomToEdit[0];
     this.dataService.setRoomToEdit(this.selectedRoom);
     this.ngxSmartModalService.getModal('roomEditModal').open();
   }

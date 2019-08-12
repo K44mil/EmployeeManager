@@ -28,21 +28,17 @@ export class EditRoomComponent implements OnInit, OnChanges {
       capacity: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
     
-   this.setEditFormValue();
+   this.setRoomEditFormValue();
   }
 
   ngOnChanges() {
     this.room = this.dataService.getRoomToEdit();
-    this.setEditFormValue();
+    this.setRoomEditFormValue();
   }
 
   get f() { return this.roomForm.controls; }
 
-  test() {
-    console.log(this.room);
-  }
-
-  setEditFormValue() {
+  setRoomEditFormValue() {
     if(this.room && this.roomForm) {
       this.roomForm.patchValue({
         number: this.room.number,

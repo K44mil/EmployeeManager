@@ -17,7 +17,7 @@
                 <td>{{ position.name }}</td>    
                 <td>{{ position.minWage | currency }}</td>
                 <td>{{ position.maxWage | currency }}</td>
-                <td><button class="btn btn-primary">EDIT</button></td>
+                <td><button (click)="editPosition(position.id)" class="btn btn-primary">EDIT</button></td>
                 <td><button (click)="deletePosition(position.id)" class="btn btn-danger">DELETE</button></td>
             </tr>
         </tbody>
@@ -37,4 +37,11 @@
     <app-add-position></app-add-position>
 
     <button class="btn btn-secondary btn-modal" (click)="positionModal.close()">CLOSE</button>
+</ngx-smart-modal>
+
+<ngx-smart-modal #positionEditModal identifier="positionEditModal">
+    <h1>EDIT POSITION</h1>
+    <app-edit-position *ngIf="this.selectedPosition" [position]="this.selectedPosition" ></app-edit-position>
+
+    <button class="btn btn-secondary btn-modal" (click)="positionEditModal.close()">CLOSE</button>
 </ngx-smart-modal>

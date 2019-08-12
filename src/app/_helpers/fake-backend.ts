@@ -57,6 +57,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return addEmployee();
                 case url.match(/\/rooms\/\d+$/) && method === 'PUT':
                     return editRoom();
+                case url.match(/\/positions\/\d+$/) && method === 'PUT':
+                    return editPosition();
                 default:
                     return next.handle(request);
             }
@@ -154,6 +156,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
 
             localStorage.setItem('rooms', JSON.stringify(rooms));
+
+            return ok();
+        }
+
+        function editPosition() {
+            const position = body;
+
+            positions.forEach(p => {
+                if (p.id === idFromUrl()) {
+                    p.name = position.name;
+                    p.minWage = position.minWage;
+                    p.maxWage = position.maxWage;
+                }
+            });
+
+            localStorage.setItem('positions', JSON.stringify(positions));
 
             return ok();
         }
