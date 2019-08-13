@@ -3,14 +3,10 @@
     <div class="card-header">
         <h3>Room usage</h3>
         <div class="room-number-form">
-            <form>
+            <form [formGroup]="roomNumberForm">
                 <div class="form-group">
-                    <select>
-                        <option>101</option>
-                        <option>102</option>
-                        <option>103</option>
-                        <option>104</option>
-                        <option>105</option>
+                    <select formControlName="roomNumber" (click)="setRoomNumber(f.roomNumber.value)" size="1" [compareWith]="compareRoomsId">
+                        <option *ngFor="let room of rooms" [ngValue]="room.id" >{{ room.number }}</option>
                     </select>
                 </div>
             </form>

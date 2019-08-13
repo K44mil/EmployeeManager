@@ -34,6 +34,7 @@ import { EditEmployeeComponent } from './_components/edit-employee/edit-employee
 import { RoomUsageChartComponent } from './_components/_charts/room-usage-chart/room-usage-chart.component';
 import { EmployeesPerPositionChartComponent } from './_components/_charts/employees-per-position-chart/employees-per-position-chart.component';
 import { AvgSalaryPerPositionChartComponent } from './_components/_charts/avg-salary-per-position-chart/avg-salary-per-position-chart.component';
+import { SalaryPerPositionChartComponent } from './_components/_charts/salary-per-position-chart/salary-per-position-chart.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { AvgSalaryPerPositionChartComponent } from './_components/_charts/avg-sa
     RoomUsageChartComponent,
     EmployeesPerPositionChartComponent,
     AvgSalaryPerPositionChartComponent,
+    SalaryPerPositionChartComponent,
   ],
   imports: [
     BrowserModule,

@@ -43,8 +43,8 @@ export class DataService {
     return this.employeeToEdit;
   }
 
-  getGeneralInfo() {
-    return this.http.get<any[]>(this.infoUrl);
+  getGeneralInfo(id: number) {
+    return this.http.get<any[]>(`${this.infoUrl}/${id}`);
   }
 
 }

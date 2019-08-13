@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-avg-salary-per-position-chart',
@@ -7,23 +7,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AvgSalaryPerPositionChartComponent implements OnInit {
 
+  @Input() generalInfo: any;
+
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true
   }
 
-  public barChartLabels = ['test', 'test'];
+  public barChartLabels;
   public barChartType = 'doughnut';
   public barChartLegend = 'true';
 
-  public barChartData = [
-    {data: [1, 2],
-    label: 'Employees per position'}
-  ]; 
+  public barChartData;; 
 
   constructor() { }
 
   ngOnInit() {
+    if(this.generalInfo) {
+      this.barChartData = [{
+        data: this.generalInfo.avgSalaryPerPositionD
+      }];
+
+      this.barChartLabels = this.generalInfo.avgSalaryPerPositionL;
+    }
   }
 
   changeChartType() {
@@ -33,6 +39,10 @@ export class AvgSalaryPerPositionChartComponent implements OnInit {
       this.barChartType = 'polarArea'
     else
       this.barChartType = 'doughnut';
+  }
+
+  show() {
+    console.log(this.generalInfo);
   }
 
 

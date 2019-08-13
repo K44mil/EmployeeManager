@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-employees-per-position-chart',
-  templateUrl: './employees-per-position-chart.component.html',
-  styleUrls: ['./employees-per-position-chart.component.scss']
+  selector: 'app-salary-per-position-chart',
+  templateUrl: './salary-per-position-chart.component.html',
+  styleUrls: ['./salary-per-position-chart.component.scss']
 })
-export class EmployeesPerPositionChartComponent implements OnInit {
+export class SalaryPerPositionChartComponent implements OnInit {
 
   @Input() generalInfo: any;
 
@@ -25,11 +25,12 @@ export class EmployeesPerPositionChartComponent implements OnInit {
   ngOnInit() {
     if(this.generalInfo) {
       this.barChartData = [{
-        data: this.generalInfo.employeesPerPos
+        data: this.generalInfo.sumSalaryPerPositionD
       }];
 
       this.barChartLabels = this.generalInfo.avgSalaryPerPositionL;
     }
+    
   }
 
   changeChartType() {
@@ -41,4 +42,7 @@ export class EmployeesPerPositionChartComponent implements OnInit {
       this.barChartType = 'doughnut';
   }
 
+  show() {
+    console.log(this.generalInfo);
+  }
 }

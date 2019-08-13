@@ -66,7 +66,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return editPosition();
                 case url.match(/\/employees\/\d+$/) && method === 'PUT':
                     return editEmployee();
-                case url.endsWith('/info') && method === 'GET':
+                case url.match(/\/info\/\d+$/) && method === 'GET':
                     return info();
                 default:
                     return next.handle(request);
@@ -209,7 +209,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             let employeePerPos = [];
 
             employees.forEach(e => {
-                if(e.room.number === '101' && !allPositions.includes(e.position.name)) {
+                if(e.room.id === idFromUrl() && !allPositions.includes(e.position.name)) {
                     allPositions.push(e.position.name);
                 }
             });
@@ -220,29 +220,27 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             for(let i = 0; i < allPositions.length; i++) {
                 for(let j = 0; j < employees.length; j++) {
-                    if(employees[j].position.name === allPositions[i] && employees[j].room.number === '101') {
+                    if(employees[j].position.name === allPositions[i] && employees[j].room.id === idFromUrl()) {
                         employeePerPos[i]++;
                     }
                 }
             }
 
-            let sum:number = 0;
-
-           
+            let sum:number = 0;  
 
             employeePerPos.forEach(e => {
                 sum += Number.parseInt(e);
             });
 
 
-            let room: Room = rooms.filter(r => r.number === '101')[0];
+            let room: Room = rooms.filter(r => r.id === idFromUrl())[0];
 
             let freeSpace;
 
             if (sum < room.capacity) {
                 freeSpace = room.capacity - sum;
 
-                allPositions.push('Free space');
+                allPositions.push('Free places');
                 employeePerPos.push(freeSpace);
             }
 
@@ -260,6 +258,54 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             avgSalary = sumSalary / employees.length;
             
+            // --- Average salary per position
+
+            let avgAllPosNames = [];
+            let avgSalaryPerPos = [];
+            let sumSalaryPerPos = [];
+            let employeesPerPos = [];
+
+            employees.forEach(e => {
+                if(!avgAllPosNames.includes(e.position.name)) {
+                    avgAllPosNames.push(e.position.name);
+                }
+            });
+
+            positions.forEach(() => {
+                avgSalaryPerPos.push(0);
+                sumSalaryPerPos.push(0);
+                employeesPerPos.push(0);
+            });
+
+            for(let i = 0; i < avgAllPosNames.length; i++) {
+
+                let sumPos = 0;
+                let coutEmployees = 0;
+
+                for(let j = 0; j < employees.length; j++) {
+                    if(avgAllPosNames[i] === employees[j].position.name) {
+                        sumPos += Number.parseInt(employees[j].salary);
+                        coutEmployees++;
+                    }
+                }
+
+                if (coutEmployees !== 0) {
+                    avgSalaryPerPos[i] = sumPos/coutEmployees;
+                    sumSalaryPerPos[i] = sumPos;
+                }
+            
+            }
+
+            // count employees per position
+
+            for(let i = 0; i < avgAllPosNames.length; i++) {
+                for(let j = 0; j < employees.length; j++) {
+                    if (avgAllPosNames[i] === employees[j].position.name) {
+                        employeesPerPos[i]++;
+                    }
+                }
+            }
+
 
             let infoObj = {
                 employeesNumber: employees.length,
@@ -268,7 +314,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 bestPaidEmployee: bestPaidEmployee,
                 worstPaidEmployee: worstPaidEmployee,
                 avgSalary: avgSalary,
-                sumSalary: sumSalary
+                sumSalary: sumSalary,
+                avgSalaryPerPositionL: avgAllPosNames,
+                avgSalaryPerPositionD: avgSalaryPerPos,
+                sumSalaryPerPositionD: sumSalaryPerPos,
+                employeesPerPos: employeesPerPos
             }
 
             return ok(infoObj);
