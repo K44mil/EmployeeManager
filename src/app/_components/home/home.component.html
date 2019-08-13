@@ -1,22 +1,47 @@
 <h1>WELCOME TO EMPLOYEE MANAGER</h1>
 
-<div class="container">
+<div class="container container-margin">
     
-        <div>
-            <div>
-                <div style="display: block">
-                <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [plugins]="barChartPlugins"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType">
-                </canvas>
+    <div class="row card-margin">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>General info</h3>
+                </div>
+
+                <div *ngIf="this.generalInfo" class="content">
+                    W firmie zatrudnionych jest {{ generalInfo.employeesNumber }} pracowników.
+                    Najlepiej zarabiającym pracownikiem jest <b>{{ generalInfo.bestPaidEmployee.firstName }} {{ generalInfo.bestPaidEmployee.lastName }}
+                        ({{ generalInfo.bestPaidEmployee.position.name }})</b> z pensją wynoszącą {{ generalInfo.bestPaidEmployee.salary | currency }} miesięcznie.
+                    Najgorzej zarabiającym pracownikiem jest <b>{{ generalInfo.worstPaidEmployee.firstName }} {{ generalInfo.worstPaidEmployee.lastName }}
+                            ({{ generalInfo.worstPaidEmployee.position.name }})</b> z pensją wynoszącą {{ generalInfo.worstPaidEmployee.salary | currency }} miesięcznie.
+                            Firma wydaje łącznie {{ generalInfo.sumSalary | currency }} na pensje dla pracowników, średnia pensja wynosi {{ generalInfo.avgSalary | currency }}
                 </div>
             </div>
+        </div>  
+    </div>
+
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card card-chart">
+                <app-room-usage-chart *ngIf="this.generalInfo" [generalInfo]="this.generalInfo"></app-room-usage-chart>
+            </div>
         </div>
+        <div class="col-12 col-md-6">
+            <div class="card card-chart">
+                <app-employees-per-position-chart></app-employees-per-position-chart>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card card-chart">
+                <app-avg-salary-per-position-chart></app-avg-salary-per-position-chart>
+            </div>
+        </div>
+    </div>
     
-    <br>
-    <button class="btn btn-info" (click)="changeChartType()">TRY IT</button>
+
 </div>

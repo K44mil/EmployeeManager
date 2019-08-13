@@ -31,6 +31,9 @@ import { EmployeesFilterComponent } from './_components/employees-filter/employe
 import { EditRoomComponent } from './_components/edit-room/edit-room.component';
 import { EditPositionComponent } from './_components/edit-position/edit-position.component';
 import { EditEmployeeComponent } from './_components/edit-employee/edit-employee.component';
+import { RoomUsageChartComponent } from './_components/_charts/room-usage-chart/room-usage-chart.component';
+import { EmployeesPerPositionChartComponent } from './_components/_charts/employees-per-position-chart/employees-per-position-chart.component';
+import { AvgSalaryPerPositionChartComponent } from './_components/_charts/avg-salary-per-position-chart/avg-salary-per-position-chart.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import { EditEmployeeComponent } from './_components/edit-employee/edit-employee
     EditRoomComponent,
     EditPositionComponent,
     EditEmployeeComponent,
+    RoomUsageChartComponent,
+    EmployeesPerPositionChartComponent,
+    AvgSalaryPerPositionChartComponent,
   ],
   imports: [
     BrowserModule,

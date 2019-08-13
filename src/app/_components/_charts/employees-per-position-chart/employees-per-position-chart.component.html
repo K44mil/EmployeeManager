@@ -1,0 +1,16 @@
+
+        <div class="card-header">
+            <h3>Employees per position</h3>
+        </div>
+        <div class="chart">
+            <div style="display: block" (click)="changeChartType()">
+            <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+            </canvas>
+            </div>
+        </div>

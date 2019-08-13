@@ -9,6 +9,9 @@ import { POSITIONS } from '../_database/mock-positions';
 import { EMPLOYEES } from '../_database/mock-employees';
 import { EditEmployeeComponent } from '../_components/edit-employee/edit-employee.component';
 import { Employee } from '../_models/employee';
+import { summaryFileName } from '@angular/compiler/src/aot/util';
+import { Room } from '../_models/room';
+import { AvgSalaryPerPositionChartComponent } from '../_components/_charts/avg-salary-per-position-chart/avg-salary-per-position-chart.component';
 
 // // put data to local storage
 
@@ -63,6 +66,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return editPosition();
                 case url.match(/\/employees\/\d+$/) && method === 'PUT':
                     return editEmployee();
+                case url.endsWith('/info') && method === 'GET':
+                    return info();
                 default:
                     return next.handle(request);
             }
@@ -198,6 +203,77 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
+        function info() {
+
+            let allPositions = [];
+            let employeePerPos = [];
+
+            employees.forEach(e => {
+                if(e.room.number === '101' && !allPositions.includes(e.position.name)) {
+                    allPositions.push(e.position.name);
+                }
+            });
+
+            for(let i = 0; i < allPositions.length; i++) {
+                employeePerPos.push(0);
+            }
+
+            for(let i = 0; i < allPositions.length; i++) {
+                for(let j = 0; j < employees.length; j++) {
+                    if(employees[j].position.name === allPositions[i] && employees[j].room.number === '101') {
+                        employeePerPos[i]++;
+                    }
+                }
+            }
+
+            let sum:number = 0;
+
+           
+
+            employeePerPos.forEach(e => {
+                sum += Number.parseInt(e);
+            });
+
+
+            let room: Room = rooms.filter(r => r.number === '101')[0];
+
+            let freeSpace;
+
+            if (sum < room.capacity) {
+                freeSpace = room.capacity - sum;
+
+                allPositions.push('Free space');
+                employeePerPos.push(freeSpace);
+            }
+
+            let employeesBySalary = employees.sort(sortBySalaryASC);
+
+            let bestPaidEmployee = employeesBySalary[employeesBySalary.length - 1];
+            let worstPaidEmployee = employeesBySalary[0];
+
+            let avgSalary = 0;
+            let sumSalary = 0;
+
+            employees.forEach(e => {
+                sumSalary += Number.parseInt(e.salary);
+            });
+
+            avgSalary = sumSalary / employees.length;
+            
+
+            let infoObj = {
+                employeesNumber: employees.length,
+                positionsPerRoomL: allPositions,
+                positionsPerRoomD: employeePerPos,
+                bestPaidEmployee: bestPaidEmployee,
+                worstPaidEmployee: worstPaidEmployee,
+                avgSalary: avgSalary,
+                sumSalary: sumSalary
+            }
+
+            return ok(infoObj);
+        }
+
         // helper functions
 
         function ok(body?) {
@@ -225,6 +301,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
             localStorage.setItem('rooms', JSON.stringify(rooms));
         }
+
+        function sortBySalaryASC(e1, e2) {
+            return ((e1.salary == e2.salary) ? 0 : ((e1.salary > e2.salary) ? 1 : -1 ));
+        }  
     }
 }
 

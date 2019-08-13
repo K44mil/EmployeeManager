@@ -1,0 +1,19 @@
+<div class="card-header">
+        <h3>Average salary per position</h3>
+    </div>
+    <div class="chart">
+        <div style="display: block">
+        <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+        </canvas>
+        </div>
+    </div>
+
+
+<br>
+<button class="btn btn-info btn-margin" (click)="changeChartType()">TRY IT</button>

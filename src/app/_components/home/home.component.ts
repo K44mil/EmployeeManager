@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { DataService } from 'src/app/_services/data.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -7,32 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  public barChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  }
+  generalInfo: any;
 
-  public barChartLabels = ['Programmer', 'Recepcionist', 'Project Manager', 'Free space'];
-  public barChartType = 'doughnut';
-  public barChartLegend = 'true';
-
-  public barChartData = [
-    {data: [4, 2, 1, 3], label: 'Room usage'}
-  ];
-
-  constructor() { }
+  constructor(
+    private dataService: DataService
+  ) { }
 
   ngOnInit() {
-    
+    this.dataService.getGeneralInfo()
+      .pipe(first())
+      .subscribe(
+        gI => this.generalInfo = gI
+      );
+
   }
 
-  changeChartType() {
-    if (this.barChartType === 'doughnut')
-      this.barChartType = 'pie';
-    else if (this.barChartType === 'pie')
-      this.barChartType = 'polarArea'
-    else
-      this.barChartType = 'doughnut';
+  showGeneralInfoInConsole() {
+    console.log(this.generalInfo);
   }
 
 }

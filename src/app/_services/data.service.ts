@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Room } from '../_models/room';
 import { Position } from '../_models/position';
 import { Employee } from '../_models/employee';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,11 @@ export class DataService {
   private positionToEdit: Position;
   private employeeToEdit: Employee;
 
-  constructor() { }
+  private infoUrl: string = 'http://localhost:4000/info';
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   setRoomToEdit(room: Room) {
     this.roomToEdit = room;
@@ -37,4 +42,9 @@ export class DataService {
   getEmployeeToEdit() {
     return this.employeeToEdit;
   }
+
+  getGeneralInfo() {
+    return this.http.get<any[]>(this.infoUrl);
+  }
+
 }
