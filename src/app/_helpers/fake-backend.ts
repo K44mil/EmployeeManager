@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError, from } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize, refCount } from 'rxjs/operators';
+import { Position } from '../_models/position';
 
 // import fake-database
 import { ROOMS } from '../_database/mock-rooms';
@@ -101,12 +102,46 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // DELETE functions
 
         function deletePosition() {
+            let positionToDelete = positions.filter(x => x.id === idFromUrl())[0];
+
+            let nullPosition: Position = {
+                id: -1,
+                name: '-',
+                minWage: 0,
+                maxWage: 0
+            }
+
+            employees.forEach(e => {
+                if (e.position.id === positionToDelete.id) {
+                    e.position = nullPosition;
+                    e.salary = 0;
+                }
+            });
+            localStorage.setItem('employees', JSON.stringify(employees));
+            
             positions = positions.filter(x => x.id !== idFromUrl());
             localStorage.setItem('positions', JSON.stringify(positions));
             return ok();
         }
 
         function deleteRoom() {
+            let roomToDelete = rooms.filter(x => x.id === idFromUrl())[0];
+
+            let nullRoom: Room = {
+                id: -1,
+                number: '-',
+                name: '-',
+                capacity: 1000,
+                occupiedPlaces: 0
+            }
+
+            employees.forEach(e => {
+                if (e.room.id === roomToDelete.id) {
+                    e.room = nullRoom;
+                }
+            });
+            localStorage.setItem('employees', JSON.stringify(employees));
+
             rooms = rooms.filter(x => x.id !== idFromUrl());
             localStorage.setItem('rooms', JSON.stringify(rooms));
             return ok();
@@ -202,6 +237,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             return ok();
         }
+
+        
 
         function info() {
 

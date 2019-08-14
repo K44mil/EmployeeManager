@@ -1,6 +1,17 @@
 <br><br>
 <div>
     <div class="container">
+            <div style="float: right">
+                    <div class="form-group">
+                        <label for="itemsPerPage">Rooms per page</label>
+                        <select id="itemsPerPage" [formControl]="itemsPerPageControl" (change)="setItemsPerPage(this.itemsPerPageControl.value)">
+                            <option value="5" >5</option>
+                            <option value="10" >10</option>
+                            <option value="15" >15</option>
+                            <option value="20" >20</option>
+                        </select>
+                    </div>
+                </div>
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
@@ -13,8 +24,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let room of rooms | paginate: { itemsPerPage: roomsPerPage, currentPage: currentPage }">
-                        <td>{{ room.id }}</td>
+                    <tr *ngFor="let room of rooms | paginate: { itemsPerPage: roomsPerPage, currentPage: currentPage }; let i = index">
+                        <td>{{ i+1 }}</td>
                         <td>{{ room.number }}</td>
                         <td>{{ room.name }}</td>
                         <td>{{ room.occupiedPlaces }}/{{ room.capacity }}</td>

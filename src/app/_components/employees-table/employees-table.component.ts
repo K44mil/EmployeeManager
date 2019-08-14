@@ -7,6 +7,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Position } from '../../_models/position';
 import { PositionService } from 'src/app/_services/position.service';
 import { DataService } from 'src/app/_services/data.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-employees-table',
@@ -22,6 +23,7 @@ export class EmployeesTableComponent implements OnInit {
   // Pagination values
   currentPage: number = 1;
   employeesPerPage: number = 5;
+  itemsPerPageControl: FormControl;
   // !--Pagination values
 
   // Filter values
@@ -39,6 +41,8 @@ export class EmployeesTableComponent implements OnInit {
   ngOnInit() {
     this.loadEmployees();
     this.loadPositions();
+
+    this.itemsPerPageControl = new FormControl(this.employeesPerPage);
   }
 
   loadEmployees() {
@@ -78,6 +82,10 @@ export class EmployeesTableComponent implements OnInit {
 
   setFilteredEmployees($event) {
     this.employees = $event;
+  }
+
+  setItemsPerPage(value: number) {
+    this.employeesPerPage = value;
   }
 
 }

@@ -5,6 +5,7 @@ import { RoomService } from '../../_services/room.service';
 import { Room } from '../../_models/room';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { DataService } from 'src/app/_services/data.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-rooms-table',
@@ -18,6 +19,7 @@ export class RoomsTableComponent implements OnInit {
   // Pagination values
   currentPage: number = 1;
   roomsPerPage: number = 5;
+  itemsPerPageControl: FormControl;
   // !--Pagination values
 
   selectedRoom: Room;
@@ -30,6 +32,8 @@ export class RoomsTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadRooms();
+
+    this.itemsPerPageControl = new FormControl(this.roomsPerPage);
   }
 
   loadRooms() {
@@ -58,6 +62,10 @@ export class RoomsTableComponent implements OnInit {
 
   getAmountOfWorkers(): string {
     return '0';
+  }
+
+  setItemsPerPage(value: number) {
+    this.roomsPerPage = value;
   }
 
 }

@@ -5,7 +5,7 @@
         <div class="room-number-form">
             <form [formGroup]="roomNumberForm">
                 <div class="form-group">
-                    <select formControlName="roomNumber" (click)="setRoomNumber(f.roomNumber.value)" size="1" [compareWith]="compareRoomsId">
+                    <select formControlName="roomNumber" (change)="setRoomNumber(f.roomNumber.value)" size="1" [compareWith]="compareRoomsId">
                         <option *ngFor="let room of rooms" [ngValue]="room.id" >{{ room.number }}</option>
                     </select>
                 </div>

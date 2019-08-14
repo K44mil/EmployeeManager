@@ -1,5 +1,16 @@
 <br><br>
 <div class="container">
+        <div style="float: right">
+                <div class="form-group">
+                    <label for="itemsPerPage">Positions per page</label>
+                    <select id="itemsPerPage" [formControl]="itemsPerPageControl" (change)="setItemsPerPage(this.itemsPerPageControl.value)">
+                        <option value="5" >5</option>
+                        <option value="10" >10</option>
+                        <option value="15" >15</option>
+                        <option value="20" >20</option>
+                    </select>
+                </div>
+            </div>
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -12,8 +23,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let position of positions | paginate: { itemsPerPage: positionsPerPage, currentPage: currentPage }">
-                <td>{{ position.id }}</td>
+            <tr *ngFor="let position of positions | paginate: { itemsPerPage: positionsPerPage, currentPage: currentPage }; let i = index">
+                <td>{{ i+1 }}</td>
                 <td>{{ position.name }}</td>    
                 <td>{{ position.minWage | currency }}</td>
                 <td>{{ position.maxWage | currency }}</td>

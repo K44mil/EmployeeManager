@@ -69,15 +69,12 @@ export class RoomUsageChartComponent implements OnInit, OnChanges {
   }
 
   setRoomNumber(number: string) {
-    if (this.countClicks % 2 === 0) {
+    
       this.roomNumber = number;
       if(this.roomNumber) {
         this.changeRoomNumberEvent.emit(this.roomNumber);
       }
-      this.countClicks++;
-    } else {
-      this.countClicks++;
-    }
+    
   }
 
   compareRoomsId(id1: number, id2: number): boolean {

@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { Position } from '../../_models/position';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { DataService } from 'src/app/_services/data.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-positions-table',
@@ -18,6 +19,7 @@ export class PositionsTableComponent implements OnInit {
   // Pagination values
   currentPage: number = 1;
   positionsPerPage: number = 5;
+  itemsPerPageControl: FormControl;
   // !--Pagination values
 
   selectedPosition: Position;
@@ -30,6 +32,7 @@ export class PositionsTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadPositions();
+    this.itemsPerPageControl = new FormControl(this.positionsPerPage);
   }
 
   loadPositions() {
@@ -54,6 +57,10 @@ export class PositionsTableComponent implements OnInit {
     this.selectedPosition = positionToEdit[0];
     this.dataService.setPositionToEdit(this.selectedPosition);
     this.ngxSmartModalService.getModal('positionEditModal').open();
+  }
+
+  setItemsPerPage(value: number) {
+    this.positionsPerPage = value;
   }
 
 }
