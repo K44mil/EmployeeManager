@@ -24,6 +24,8 @@ import { AddEmployeeComponent } from './_components/add-employee/add-employee.co
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { SideNavComponent } from './_components/side-nav/side-nav.component';
@@ -35,6 +37,7 @@ import { RoomUsageChartComponent } from './_components/_charts/room-usage-chart/
 import { EmployeesPerPositionChartComponent } from './_components/_charts/employees-per-position-chart/employees-per-position-chart.component';
 import { AvgSalaryPerPositionChartComponent } from './_components/_charts/avg-salary-per-position-chart/avg-salary-per-position-chart.component';
 import { SalaryPerPositionChartComponent } from './_components/_charts/salary-per-position-chart/salary-per-position-chart.component';
+import { RoomDesignerComponent } from './_components/room-designer/room-designer.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,7 @@ import { SalaryPerPositionChartComponent } from './_components/_charts/salary-pe
     EmployeesPerPositionChartComponent,
     AvgSalaryPerPositionChartComponent,
     SalaryPerPositionChartComponent,
+    RoomDesignerComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,8 @@ import { SalaryPerPositionChartComponent } from './_components/_charts/salary-pe
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    ChartsModule
+    ChartsModule,
+    MatStepperModule
   ],
   providers: [
     fakeBackendProvider,

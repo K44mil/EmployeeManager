@@ -1,0 +1,35 @@
+export class Desk {
+
+    id: number;
+    height: number;
+    width: number;
+    positionX: number;
+    positionY: number;
+    direction: number; // 1 - left, 2 - top, 3 - right, 4 - bottom
+    collide: number;
+    employeeId: number;
+    roomId: number;
+
+    constructor(
+        id: number,
+        height: number,
+        width: number,
+        positionX: number,
+        positionY: number,
+        direction: number,
+        collide: number,
+        employeeId: number,
+        roomId: number
+    ) {
+        this.id = id;
+        this.height = height;
+        this.width = width;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.employeeId = employeeId;
+        this.roomId = roomId;
+        this.collide = collide;
+        this.direction = direction;
+    }
+
+}

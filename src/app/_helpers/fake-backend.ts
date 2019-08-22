@@ -131,6 +131,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 id: -1,
                 number: '-',
                 name: '-',
+                height: 1000,
+                width: 1000,
                 capacity: 1000,
                 occupiedPlaces: 0
             }

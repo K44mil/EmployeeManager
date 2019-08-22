@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
   roomNumber: number;
   rooms: Room[];
 
-  firstLoad: number = 1;
 
   constructor(
     private dataService: DataService,
@@ -39,13 +38,15 @@ export class HomeComponent implements OnInit {
       gI => this.generalInfo = gI
     );
 
-    this.firstLoad = 0;
   }
 
   loadRooms() {
     this.roomService.getRooms()
       .pipe(first())
-      .subscribe(r => this.rooms = r);
+      .subscribe(r => {
+        this.rooms = r;
+        this.loadGeneralInfo(this.rooms[0].id);
+      });
   }
 
   showGeneralInfoInConsole() {
