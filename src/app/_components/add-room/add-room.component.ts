@@ -11,6 +11,8 @@ import { first } from 'rxjs/operators';
 export class AddRoomComponent implements OnInit {
 
   roomForm: FormGroup;
+  deskDesignerFlag: FormGroup;
+  isColliding = false;
 
   constructor(
     private roomService: RoomService,
@@ -21,7 +23,12 @@ export class AddRoomComponent implements OnInit {
     this.roomForm = this.formBuilder.group({
       number: ['', Validators.required],
       name: ['', Validators.required],
+      width: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      height: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       capacity: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+    });
+    this.deskDesignerFlag = this.formBuilder.group({
+      isColliding: ['', Validators.required]
     });
   }
 

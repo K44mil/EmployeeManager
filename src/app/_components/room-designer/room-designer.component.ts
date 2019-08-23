@@ -21,8 +21,9 @@ export class RoomDesignerComponent implements OnInit {
   spaceHeight = 200;
 
   // room properites
-  roomHeight = 400;
-  roomWidth = 400;
+  roomHeight = 600;
+  roomWidth = 600;
+  numberOfDesks = 9;
 
   // SVG viewBox properties
   viewBox = '0 0 ' + this.roomWidth.toString() + ' ' + this.roomHeight.toString();
@@ -34,11 +35,10 @@ export class RoomDesignerComponent implements OnInit {
 
   ngOnInit() {
     // test objects
-    for(let i = 0; i < 4; i++) {
-      const desk = new Desk(i+1, 70, 150, 100, 100, 2, 0, -1, 0);
-      this.desks.push(desk);
-    }
-
+    // for(let i = 0; i < 9; i++) {
+    //   const desk = new Desk(i+1, 70, 150, 100, 100, 2, 0, -1, 0);
+    //   this.desks.push(desk);
+    // }
     this.detectCollisions();
   }
 
@@ -250,6 +250,12 @@ export class RoomDesignerComponent implements OnInit {
     }
   }
 
+  newDeskToRoom() {
+    const desk = new Desk(this.numberOfDesks--, 70, 150, 25, 25, 1, -1, -1, -1);
+    this.desks.push(desk);
+    this.detectCollisions();
+  }
+
   changeDeskDirection(): void {
     if (this.selectedDesk) {
       if (this.selectedDesk.direction < 4) {
@@ -262,16 +268,30 @@ export class RoomDesignerComponent implements OnInit {
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
+    
+    switch (event.key) {
+      case 'r':
+        this.changeDeskDirection();
+      break;
+      case 'c':
+        this.detectCollisions();
+      break;
+      case 'w':
+        this.selectedDesk.positionY -= 1;
+      break;
+      case 'd':
+        this.selectedDesk.positionX += 1;
+      break;
+      case 's':
+        this.selectedDesk.positionY += 1;
+      break;
+      case 'a':
+        this.selectedDesk.positionX -= 1;
+      break;
+    }
 
-    if (event.key === 'r') {
-      this.changeDeskDirection();
-    }
-    if (event.key === 'c') {
-      this.detectCollisions();
-    }
-    if (event.key === 's') {
-      this.selectedDesk.positionY += 0.05;
-    }
+    this.detectCollisions();
+    this.correctDesksPositions();
 
   }
 

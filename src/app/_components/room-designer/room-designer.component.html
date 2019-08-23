@@ -1,7 +1,7 @@
 <div class="room-designer">
         <svg 
-        [attr.width]="200"
-        [attr.height]="200" 
+        [attr.width]="400"
+        [attr.height]="400" 
         [attr.viewBox]="this.viewBox" 
         id="svgElement"
         (mouseup)="onSvgMouseUp($event)"
@@ -86,4 +86,7 @@
         </rect>
     
         </svg>
-    </div>
+</div>
+<div style="margin-top: 5px;" *ngIf="numberOfDesks !== 0">
+    <button type="button" class="btn btn-warning" (click)="newDeskToRoom()">+</button>
+</div>

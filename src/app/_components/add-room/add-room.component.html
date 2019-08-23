@@ -25,6 +25,47 @@
                             </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="width">Room length X</label>
+                            <input type="text" class="form-control" id="width" formControlName="width">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="height">Room length Y</label>
+                            <input type="text" class="form-control" id="height" formControlName="height">
+                        </div>
+                    </div>
+                    <!-- TODO: Validation alerts [width] -->
+                    <div class="col-12 col-md-12" *ngIf="f.width.invalid && (f.width.dirty || f.width.touched)">
+                        <div *ngIf="f.width.errors.required" class="text-danger">
+                            Room lengthX is required.
+                        </div>
+                        <div *ngIf="f.width.errors.pattern" class="text-danger">
+                            Room lengthX should be a number [cm].
+                        </div>
+                        <div *ngIf="f.width.errors.min" class="text-danger">
+                            Room lengthX should be greater or equal 200 [cm].
+                        </div>
+                    </div>
+                    <!-- TODO: Validation alerts [height] -->
+                    <div class="col-12 col-md-12" *ngIf="f.height.invalid && (f.height.dirty || f.height.touched)">
+                        <div *ngIf="f.height.errors.required" class="text-danger">
+                            Room lengthY is required.
+                        </div>
+                        
+                        <div *ngIf="f.height.errors.pattern" class="text-danger">
+                            Room lengthY should be a number [cm].
+                        </div>
+                        
+                        <div *ngIf="f.height.errors.min" class="text-danger">
+                            Room lengthY should be greater or equal 200 [cm].
+                        </div>
+                    </div>
+                    
+                </div>
                 <div class="form-group">
                     <label for="capacity">Room capacity</label>
                     <input type="text" class="form-control" id="capacity" formControlName="capacity">
@@ -42,19 +83,20 @@
             </form>
         </mat-step>
 
-        <mat-step>
+        <mat-step [stepControl]="roomDesignerFlag">
             <ng-template matStepLabel>Design</ng-template>
-            
+
             <app-room-designer></app-room-designer>
 
+            <button type="button"  class="btn btn-success" mat-button matStepperNext>Next</button>
         </mat-step>
 
         <mat-step>
-                <ng-template matStepLabel>Done</ng-template>
-                <div style="height: 200px; width: 200px; background: red">
-    
-                </div>
-            </mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>Room is ready to save!</p>
+            <button type="submit" [disabled]="this.roomForm.invalid"  class="btn btn-success" mat-button matStepperNext (click)="onSubmit()">SAVE</button>
+                
+        </mat-step>
     
     </mat-horizontal-stepper>
 </div>
