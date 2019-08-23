@@ -12,7 +12,7 @@ import { RoomFormValidator } from 'src/app/_validators/room-form-validator';
 export class AddRoomComponent implements OnInit, OnChanges {
 
   roomForm: FormGroup;
-  deskDesignerFlag: FormGroup;
+  roomDesignerFlag: FormGroup;
 
   isRoomValid = false;
   roomWidth: number = 0;
@@ -34,7 +34,7 @@ export class AddRoomComponent implements OnInit, OnChanges {
       height: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       capacity: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     }, { validator: RoomFormValidator('width', 'height', 'capacity') });
-    this.deskDesignerFlag = this.formBuilder.group({
+    this.roomDesignerFlag = this.formBuilder.group({
       isColliding: ['', Validators.required]
     });
 
@@ -75,6 +75,21 @@ export class AddRoomComponent implements OnInit, OnChanges {
       this.roomWidth = formValue.width;
       this.numberOfDesks = formValue.capacity;
     });
+  }
+
+  setIsColliding(e) {
+    console.log(e);
+
+    if ((e.numberOfDesksLeft === 0 || e.numberOfDesksLeft === '0') && e.isColliding === false) {
+      this.roomDesignerFlag.patchValue({
+        isColliding: 'false'
+      });
+    } else {
+      this.roomDesignerFlag.patchValue({
+        isColliding: null
+      });
+    }
+    this.roomDesignerFlag.updateValueAndValidity();
   }
 
 }

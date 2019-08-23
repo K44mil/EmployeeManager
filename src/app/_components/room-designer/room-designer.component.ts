@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Desk } from 'src/app/_models/desk';
 
 @Component({
@@ -35,6 +35,10 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
   // SVG viewBox properties
   viewBox: string;
 
+  //
+  isColliding = false;
+  @Output() collidingEvent: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit() {    
@@ -46,7 +50,7 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
     console.log('rH: ' + this.roomHeight + '\nrW: ' + this.roomWidth + 'desks: ' + this.numberOfDesks);
     this.viewBox = '0 0 ' + this.roomWidth.toString() + ' ' + this.roomHeight.toString();
     this.setSvgScaledSize();
-    this.detectCollisions();
+    this.detectCollisionsAndEmit();
   }
 
   setSvgScaledSize() {
@@ -70,7 +74,19 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
 
   onSvgMouseLeave(e: MouseEvent) {
     this.correctDesksPositions();
-    this.detectCollisions();
+    this.detectCollisionsAndEmit();
+  }
+
+  detectCollisionsAndEmit() {
+    this.isColliding = this.detectCollisions();
+    
+    const designerInfo = {
+      isColliding: this.isColliding,
+      numberOfDesksLeft: this.numberOfDesks
+    }
+
+    this.collidingEvent.emit(designerInfo);
+    // console.log(this.isColliding);
   }
 
   onSvgMouseUp(e: MouseEvent) {
@@ -128,7 +144,7 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
       // correct position if out of the svg
       this.correctDesksPositions();
       // detect collision
-      this.detectCollisions();
+      this.detectCollisionsAndEmit();
       // // print space rect borders coords
       // console.log('-----------------------RECT BORDERS-----------------------------------');
       // console.log('%cSelected desk: ' + this.selectedDesk, 'color: red; font-weight: bold');
@@ -193,8 +209,7 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
     });
   }
 
-  detectCollisions(): void {
-    
+  detectCollisions(): boolean {   
     for(let i = 0; i < this.desks.length; i++) {
       this.desks[i].collide = 0;
       for(let j = 0; j < this.desks.length; j++) {
@@ -274,6 +289,13 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
         // )
       }
     }
+
+    for(let i = 0; i < this.desks.length; i++) {
+      if (this.desks[i].collide === 1) {
+        return true;
+      }
+    }
+    return false;
   }
 
   newDeskToRoom() {
@@ -324,7 +346,7 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
       break;
     }
 
-    this.detectCollisions();
+    this.detectCollisionsAndEmit();
     this.correctDesksPositions();
 
   }

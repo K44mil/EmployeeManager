@@ -88,11 +88,11 @@
 
         <mat-step [stepControl]="roomDesignerFlag">
             <ng-template matStepLabel>Design</ng-template>
-
-            <app-room-designer *ngIf="isRoomValid" [roomWidth]="this.roomWidth" [roomHeight]="this.roomHeight" [numberOfDesks]="this.numberOfDesks"></app-room-designer>
+            
+            <app-room-designer *ngIf="isRoomValid" [roomWidth]="this.roomWidth" [roomHeight]="this.roomHeight" [numberOfDesks]="this.numberOfDesks" (collidingEvent)="setIsColliding($event)"></app-room-designer>
             <!-- <app-room-designer></app-room-designer> -->
 
-            <button type="button" class="btn btn-success" mat-button matStepperNext>Next</button>
+            <button type="button" [disabled]="roomDesignerFlag.invalid" class="btn btn-success" mat-button matStepperNext>Next</button>
         </mat-step>
 
         <mat-step>
