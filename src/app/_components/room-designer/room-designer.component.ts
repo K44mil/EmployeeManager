@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit } from '@angular/core';
 import { Desk } from 'src/app/_models/desk';
 
 @Component({
@@ -6,7 +6,7 @@ import { Desk } from 'src/app/_models/desk';
   templateUrl: './room-designer.component.html',
   styleUrls: ['./room-designer.component.scss']
 })
-export class RoomDesignerComponent implements OnInit {
+export class RoomDesignerComponent implements OnInit, OnChanges {
 
   // selected desk properties
   selectedDesk: Desk = null;
@@ -21,25 +21,51 @@ export class RoomDesignerComponent implements OnInit {
   spaceHeight = 200;
 
   // room properites
-  roomHeight = 600;
-  roomWidth = 600;
-  numberOfDesks = 9;
+  @Input() roomHeight: number;
+  @Input() roomWidth: number;
+  @Input() numberOfDesks: number;
+
+  // -- svg max size
+  svgMaxWidth = 400;
+  svgMaxHeight = 400;
+  // -- svg actual scaled size
+  svgWidth: number;
+  svgHeight: number;
 
   // SVG viewBox properties
-  viewBox = '0 0 ' + this.roomWidth.toString() + ' ' + this.roomHeight.toString();
-
-  // test string
-  worker = 'Jan Kowalski\nProgrammer\n';
+  viewBox: string;
 
   constructor() { }
 
-  ngOnInit() {
-    // test objects
-    // for(let i = 0; i < 9; i++) {
-    //   const desk = new Desk(i+1, 70, 150, 100, 100, 2, 0, -1, 0);
-    //   this.desks.push(desk);
-    // }
+  ngOnInit() {    
+  }
+
+  ngOnChanges() {
+    this.resetRoom();
+    console.log('designer changes');
+    console.log('rH: ' + this.roomHeight + '\nrW: ' + this.roomWidth + 'desks: ' + this.numberOfDesks);
+    this.viewBox = '0 0 ' + this.roomWidth.toString() + ' ' + this.roomHeight.toString();
+    this.setSvgScaledSize();
     this.detectCollisions();
+  }
+
+  setSvgScaledSize() {
+    let k: number;
+
+    if (this.roomWidth > this.svgMaxWidth || this.roomHeight > this.svgMaxHeight) {
+      if (this.roomWidth > this.roomHeight) {
+        k = this.roomWidth / this.svgMaxWidth;
+      } else if (this.roomHeight > this.roomWidth) {
+        k = this.roomHeight / this.svgMaxHeight;
+      }
+
+      this.svgHeight = this.roomHeight / k;
+      this.svgWidth = this.roomWidth / k;
+
+    } else {     
+        this.svgWidth = this.roomWidth;     
+        this.svgHeight = this.roomHeight;
+    }
   }
 
   onSvgMouseLeave(e: MouseEvent) {
@@ -168,7 +194,7 @@ export class RoomDesignerComponent implements OnInit {
   }
 
   detectCollisions(): void {
-    console.clear();
+    
     for(let i = 0; i < this.desks.length; i++) {
       this.desks[i].collide = 0;
       for(let j = 0; j < this.desks.length; j++) {
@@ -277,22 +303,34 @@ export class RoomDesignerComponent implements OnInit {
         this.detectCollisions();
       break;
       case 'w':
-        this.selectedDesk.positionY -= 1;
+        if (this.selectedDesk) {
+          this.selectedDesk.positionY -= 1;
+        }
       break;
       case 'd':
-        this.selectedDesk.positionX += 1;
+        if (this.selectedDesk) {
+          this.selectedDesk.positionX += 1;
+        }    
       break;
       case 's':
-        this.selectedDesk.positionY += 1;
+        if (this.selectedDesk) {
+          this.selectedDesk.positionY += 1;
+        }    
       break;
       case 'a':
-        this.selectedDesk.positionX -= 1;
+        if (this.selectedDesk) {
+          this.selectedDesk.positionX -= 1;
+        } 
       break;
     }
 
     this.detectCollisions();
     this.correctDesksPositions();
 
+  }
+
+  resetRoom() {
+    this.desks = [];
   }
 
 }

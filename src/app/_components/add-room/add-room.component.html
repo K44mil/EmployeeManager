@@ -77,18 +77,22 @@
                             <div *ngIf="f.capacity.errors?.pattern" class="text-danger">
                                 Room capacity should be a number.
                             </div>
+                            <div *ngIf="f.capacity.errors?.maxDesks" class="text-danger">
+                                There is no place for so many desks.
+                            </div>
                     </div>
                 </div>
-                <button type="button" [disabled]="this.roomForm.invalid"  class="btn btn-success" mat-button matStepperNext>Next</button>
+                <button type="button" [disabled]="this.roomForm.invalid"  class="btn btn-success" mat-button matStepperNext >Next</button>
             </form>
         </mat-step>
 
         <mat-step [stepControl]="roomDesignerFlag">
             <ng-template matStepLabel>Design</ng-template>
 
-            <app-room-designer></app-room-designer>
+            <app-room-designer *ngIf="isRoomValid" [roomWidth]="this.roomWidth" [roomHeight]="this.roomHeight" [numberOfDesks]="this.numberOfDesks"></app-room-designer>
+            <!-- <app-room-designer></app-room-designer> -->
 
-            <button type="button"  class="btn btn-success" mat-button matStepperNext>Next</button>
+            <button type="button" class="btn btn-success" mat-button matStepperNext>Next</button>
         </mat-step>
 
         <mat-step>

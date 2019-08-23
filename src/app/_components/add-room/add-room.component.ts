@@ -1,17 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { RoomService } from 'src/app/_services/room.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { RoomFormValidator } from 'src/app/_validators/room-form-validator';
 
 @Component({
   selector: 'app-add-room',
   templateUrl: './add-room.component.html',
   styleUrls: ['./add-room.component.scss']
 })
-export class AddRoomComponent implements OnInit {
+export class AddRoomComponent implements OnInit, OnChanges {
 
   roomForm: FormGroup;
   deskDesignerFlag: FormGroup;
+
+  isRoomValid = false;
+  roomWidth: number = 0;
+  roomHeight: number = 0;
+  numberOfDesks: number = 0;
+
   isColliding = false;
 
   constructor(
@@ -26,10 +33,12 @@ export class AddRoomComponent implements OnInit {
       width: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       height: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       capacity: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
-    });
+    }, { validator: RoomFormValidator('width', 'height', 'capacity') });
     this.deskDesignerFlag = this.formBuilder.group({
       isColliding: ['', Validators.required]
     });
+
+    this.onRoomFormChanges();
   }
 
   get f() { return this.roomForm.controls; }
@@ -46,4 +55,26 @@ export class AddRoomComponent implements OnInit {
 
     this.roomForm.reset();
   }
+
+  ngOnChanges() {
+    console.log('changes');
+  }
+
+  onRoomFormChanges() {
+    this.roomForm.valueChanges.subscribe(formValue => {
+
+      this.isRoomValid = false; // reset 
+
+      if (this.roomForm.valid) {
+        this.isRoomValid = true;
+      } else {
+        this.isRoomValid = false;
+      }
+
+      this.roomHeight = formValue.height;
+      this.roomWidth = formValue.width;
+      this.numberOfDesks = formValue.capacity;
+    });
+  }
+
 }
