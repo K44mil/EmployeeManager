@@ -78,11 +78,12 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
 
   detectCollisionsAndEmit() {
     this.isColliding = this.detectCollisions();
-    
+
     const designerInfo = {
       isColliding: this.isColliding,
-      numberOfDesksLeft: this.numberOfDesks
-    }
+      numberOfDesksLeft: this.numberOfDesks,
+      desks: this.desks
+    };
 
     this.collidingEvent.emit(designerInfo);
     // console.log(this.isColliding);

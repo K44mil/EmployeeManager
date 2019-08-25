@@ -15,9 +15,10 @@ export class AddRoomComponent implements OnInit, OnChanges {
   roomDesignerFlag: FormGroup;
 
   isRoomValid = false;
-  roomWidth: number = 0;
-  roomHeight: number = 0;
-  numberOfDesks: number = 0;
+  roomWidth = 0;
+  roomHeight = 0;
+  numberOfDesks = 0;
+  desksToSave = [];
 
   isColliding = false;
 
@@ -44,12 +45,18 @@ export class AddRoomComponent implements OnInit, OnChanges {
   get f() { return this.roomForm.controls; }
 
   onSubmit() {
-    
+
     if(this.roomForm.invalid) {
       return;
     }
 
-    this.roomService.save(this.roomForm.value)
+    const roomData = {
+      roomObj: this.roomForm.value,
+      desksInRoom: this.desksToSave
+    };
+
+
+    this.roomService.save(roomData)
       .pipe(first())
       .subscribe();
 
@@ -90,6 +97,7 @@ export class AddRoomComponent implements OnInit, OnChanges {
       });
     }
     this.roomDesignerFlag.updateValueAndValidity();
+    this.desksToSave = e.desks;
   }
 
 }

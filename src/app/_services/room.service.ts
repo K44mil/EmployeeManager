@@ -21,8 +21,8 @@ export class RoomService {
     return this.http.delete(`${this.roomsUrl}/${id}`);
   }
 
-  save(room: Room) {
-    return this.http.post(`${this.roomsUrl}`, room);
+  save(roomData: any) {
+    return this.http.post(`${this.roomsUrl}`, roomData);
   }
 
   update(id: number, room: Room) {

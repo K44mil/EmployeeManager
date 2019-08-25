@@ -6,6 +6,7 @@ import { map, share } from 'rxjs/operators';
 import { ROOMS } from '../../_database/mock-rooms';
 import { POSITIONS } from '../../_database/mock-positions';
 import { EMPLOYEES } from '../../_database/mock-employees';
+import { DESKS } from '../../_database/mock-desks';
 
 @Component({
   selector: 'app-side-nav',
@@ -23,6 +24,7 @@ export class SideNavComponent {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   loadDefaultData() {
+    localStorage.setItem('desks', JSON.stringify(DESKS));
     localStorage.setItem('rooms', JSON.stringify(ROOMS));
     localStorage.setItem('positions', JSON.stringify(POSITIONS));
     localStorage.setItem('employees', JSON.stringify(EMPLOYEES));

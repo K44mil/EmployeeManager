@@ -8,11 +8,9 @@ import { Position } from '../_models/position';
 import { ROOMS } from '../_database/mock-rooms';
 import { POSITIONS } from '../_database/mock-positions';
 import { EMPLOYEES } from '../_database/mock-employees';
-import { EditEmployeeComponent } from '../_components/edit-employee/edit-employee.component';
 import { Employee } from '../_models/employee';
-import { summaryFileName } from '@angular/compiler/src/aot/util';
 import { Room } from '../_models/room';
-import { AvgSalaryPerPositionChartComponent } from '../_components/_charts/avg-salary-per-position-chart/avg-salary-per-position-chart.component';
+import { Desk } from '../_models/desk';
 
 // // put data to local storage
 
@@ -25,6 +23,7 @@ import { AvgSalaryPerPositionChartComponent } from '../_components/_charts/avg-s
 let employees = JSON.parse(localStorage.getItem('employees')) || [];
 let rooms = JSON.parse(localStorage.getItem('rooms')) || [];
 let positions = JSON.parse(localStorage.getItem('positions')) || [];
+let desks = JSON.parse(localStorage.getItem('desks')) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -135,7 +134,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 width: 1000,
                 capacity: 1000,
                 occupiedPlaces: 0
-            }
+            };
 
             employees.forEach(e => {
                 if (e.room.id === roomToDelete.id) {
@@ -143,6 +142,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             });
             localStorage.setItem('employees', JSON.stringify(employees));
+
+            // delete desks in room
+            desks = desks.filter(x => x.roomId !== roomToDelete.id);
+            localStorage.setItem('desks', JSON.stringify(desks));
 
             rooms = rooms.filter(x => x.id !== idFromUrl());
             localStorage.setItem('rooms', JSON.stringify(rooms));
@@ -158,13 +161,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // POST functions
 
         function addRoom() {
-            const room = body;
+            const room = body.roomObj;
+            const desksInRoom: Desk[] = body.desksInRoom;
 
             room.id = rooms.length ? Math.max(...rooms.map(x => x.id)) + 1 : 1;
             room.occupiedPlaces = 0;
+
+            desksInRoom.forEach(desk => {
+                desk.id = desks.length ? Math.max(...desks.map(x => x.id)) + 1 : 1;
+                desk.roomId = room.id;
+                desks.push(desk);
+            });
+
             rooms.push(room);
+            localStorage.setItem('desks', JSON.stringify(desks));
             localStorage.setItem('rooms', JSON.stringify(rooms));
-            
             return ok();
         }
 
@@ -240,7 +251,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
-        
 
         function info() {
 

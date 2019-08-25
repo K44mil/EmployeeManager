@@ -49,4 +49,4 @@ export const EMPLOYEES: Employee[] = [
         room: rooms[5],
         salary: 2000
     }
-]
+];

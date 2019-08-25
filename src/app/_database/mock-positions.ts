@@ -49,4 +49,4 @@ export const POSITIONS: Position[] = [
         minWage: 1900,
         maxWage: 2300
     }
-]
+];
