@@ -27,8 +27,8 @@ export class EditRoomComponent implements OnInit, OnChanges {
       name: ['', Validators.required],
       capacity: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
-    
-   this.setRoomEditFormValue();
+
+    this.setRoomEditFormValue();
   }
 
   ngOnChanges() {
@@ -49,7 +49,7 @@ export class EditRoomComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    
+
     if (this.roomForm.invalid) {
       return;
     }

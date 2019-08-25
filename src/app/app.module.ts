@@ -38,6 +38,7 @@ import { EmployeesPerPositionChartComponent } from './_components/_charts/employ
 import { AvgSalaryPerPositionChartComponent } from './_components/_charts/avg-salary-per-position-chart/avg-salary-per-position-chart.component';
 import { SalaryPerPositionChartComponent } from './_components/_charts/salary-per-position-chart/salary-per-position-chart.component';
 import { RoomDesignerComponent } from './_components/room-designer/room-designer.component';
+import { RoomViewComponent } from './_components/room-view/room-view.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { RoomDesignerComponent } from './_components/room-designer/room-designer
     AvgSalaryPerPositionChartComponent,
     SalaryPerPositionChartComponent,
     RoomDesignerComponent,
+    RoomViewComponent,
   ],
   imports: [
     BrowserModule,

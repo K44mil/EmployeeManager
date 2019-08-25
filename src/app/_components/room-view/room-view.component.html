@@ -1,0 +1,75 @@
+<div class="room-designer">
+    <svg 
+    [attr.width]="this.svgWidth"
+    [attr.height]="this.svgHeight" 
+    [attr.viewBox]="this.viewBox" 
+    id="svgElement">
+
+    <!-- Only desks -->
+
+    <g *ngFor="let desk of desks">
+        <circle 
+        *ngIf="desk.employeeId !== -1"
+        [attr.cx]="desk.positionX+75"
+        [attr.cy]="desk.positionY+70"
+        [attr.r]="30"
+        fill="black">
+        </circle>
+    </g>
+    
+    <g *ngFor="let desk of desks">
+
+        <!-- front to left -->
+        <rect *ngIf="desk.direction === 1" 
+        [attr.x]="desk.positionX"
+        [attr.y]="desk.positionY"
+        [attr.width]="desk.height"
+        [attr.height]="desk.width"
+        stroke="black"
+        stroke-width="5"
+        rx="15"
+        fill="brown"> 
+        </rect>
+
+        <!-- front to top -->
+        <rect *ngIf="desk.direction === 2"
+        [attr.x]="desk.positionX"
+        [attr.y]="desk.positionY"
+        [attr.width]="desk.width"
+        [attr.height]="desk.height"
+        stroke="black"
+        stroke-width="5"
+        rx="15"
+        fill="brown"> 
+        </rect>
+
+        <!-- front to right -->
+        <rect *ngIf="desk.direction === 3"
+        [attr.x]="desk.positionX + 80"
+        [attr.y]="desk.positionY"
+        [attr.width]="desk.height"
+        [attr.height]="desk.width"
+        stroke="black"
+        stroke-width="5"
+        rx="15"
+        fill="brown"> 
+        </rect>
+
+        <!-- front to bottom -->
+        <rect *ngIf="desk.direction === 4"
+        [attr.x]="desk.positionX"
+        [attr.y]="desk.positionY + 80"
+        [attr.width]="desk.width"
+        [attr.height]="desk.height"
+        stroke="black"
+        stroke-width="5"
+        rx="15"
+        fill="brown"> 
+        </rect>
+
+
+    </g>   
+    </svg>
+</div>
+<div style="margin-top: 5px;">
+</div>

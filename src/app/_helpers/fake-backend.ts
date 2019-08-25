@@ -30,14 +30,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
 
-        
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize())
             .pipe(delay(0))
             .pipe(dematerialize());
-       
-        
+
         function handleRoute() {
             switch(true) {
                 case url.endsWith('/employees') && method === 'GET':
@@ -46,6 +44,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getRooms();
                 case url.endsWith('/positions') && method === 'GET':
                     return getPositions();
+                case url.match(/\/desks\/\d+$/) && method === 'GET':
+                    return getAllDesksByRoomId();
                 case url.match(/\/positions\/\d+$/) && method === 'DELETE':
                     return deletePosition();
                 case url.match(/\/rooms\/\d+$/) && method === 'DELETE':
@@ -90,9 +90,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(positions);
         }
 
+        function getAllDesksByRoomId() {
+            const desksInRoom = desks.filter(x => x.roomId === idFromUrl());
+            return ok(desksInRoom);
+        }
+
             // GET BY ID functions
             // --TODO--
-        
+
         // function getPositionById() {
         //     const position = positions.filter(x => x.id === idFromUrl());
         //     return ok(position);
@@ -117,7 +122,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             });
             localStorage.setItem('employees', JSON.stringify(employees));
-            
             positions = positions.filter(x => x.id !== idFromUrl());
             localStorage.setItem('positions', JSON.stringify(positions));
             return ok();

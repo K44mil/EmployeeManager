@@ -21,15 +21,17 @@
                         <th scope="col">Capacity</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let room of rooms | paginate: { itemsPerPage: roomsPerPage, currentPage: currentPage }; let i = index">
-                        <td>{{ i+1 }}</td>
+                        <td>{{ i + 1 + (currentPage*roomsPerPage) - roomsPerPage }}</td>
                         <td>{{ room.number }}</td>
                         <td>{{ room.name }}</td>
                         <td>{{ room.occupiedPlaces }}/{{ room.capacity }}</td>
                         <td><button (click)="editRoom(room.id)" class="btn btn-primary">EDIT</button></td>
+                        <td><button (click)="viewRoom(room.id)" class="btn btn-info">VIEW</button></td>
                         <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">DELETE</button></td>
                     </tr>
                 </tbody>
@@ -58,6 +60,14 @@
     <app-edit-room *ngIf="this.selectedRoom" [room]="this.selectedRoom" ></app-edit-room>
 
     <button class="btn btn-secondary btn-modal" (click)="roomEditModal.close()">CLOSE</button>
+</ngx-smart-modal>
+
+<ngx-smart-modal #roomViewModal identifier="roomViewModal">
+    <h1>ROOM VIEW</h1>
+    
+    <app-room-view *ngIf="this.selectedRoom" [room]="this.selectedRoom"></app-room-view>
+
+    <button class="btn btn-secondary btn-modal" (click)="roomViewModal.close()">CLOSE</button>
 </ngx-smart-modal>
 
 

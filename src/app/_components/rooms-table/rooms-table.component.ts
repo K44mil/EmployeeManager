@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { RoomService } from '../../_services/room.service';
 import { Room } from '../../_models/room';
 import { NgxSmartModalService } from 'ngx-smart-modal';
-import { DataService } from 'src/app/_services/data.service';
+import { DataService } from '../../_services/data.service';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -23,6 +23,8 @@ export class RoomsTableComponent implements OnInit {
   // !--Pagination values
 
   selectedRoom: Room;
+
+  viewRoomId: number;
 
   constructor(
     private roomService: RoomService,
@@ -56,16 +58,19 @@ export class RoomsTableComponent implements OnInit {
     this.ngxSmartModalService.getModal('roomEditModal').open();
   }
 
-  addRoom() { 
+  addRoom() {
     this.ngxSmartModalService.getModal('roomModal').open();
-  }
-
-  getAmountOfWorkers(): string {
-    return '0';
   }
 
   setItemsPerPage(value: number) {
     this.roomsPerPage = value;
+  }
+
+  viewRoom(id: number) {
+    let roomToView = this.rooms.filter(room => room.id === id);
+    this.selectedRoom = roomToView[0];
+
+    this.ngxSmartModalService.getModal('roomViewModal').open();
   }
 
 }
