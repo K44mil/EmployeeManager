@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit, Output, EventEmitter, ɵConsole } from '@angular/core';
 import { Desk } from 'src/app/_models/desk';
 
 @Component({
@@ -21,8 +21,8 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
   spaceHeight = 200;
 
   // room properites
-  @Input() roomHeight: number;
-  @Input() roomWidth: number;
+  @Input() roomHeight: any;
+  @Input() roomWidth: any;
   @Input() numberOfDesks: number;
 
   // -- svg max size
@@ -46,29 +46,28 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.resetRoom();
-    console.log('designer changes');
-    console.log('rH: ' + this.roomHeight + '\nrW: ' + this.roomWidth + 'desks: ' + this.numberOfDesks);
+    // console.log('designer changes');
+    // console.log('rH: ' + this.roomHeight + '\nrW: ' + this.roomWidth + 'desks: ' + this.numberOfDesks);
     this.viewBox = '0 0 ' + this.roomWidth.toString() + ' ' + this.roomHeight.toString();
     this.setSvgScaledSize();
     this.detectCollisionsAndEmit();
   }
 
   setSvgScaledSize() {
-    let k: number;
+    this.roomHeight = Number.parseInt(this.roomHeight, 10);
+    this.roomWidth = Number.parseInt(this.roomWidth, 10);
 
-    if (this.roomWidth > this.svgMaxWidth || this.roomHeight > this.svgMaxHeight) {
-      if (this.roomWidth > this.roomHeight) {
-        k = this.roomWidth / this.svgMaxWidth;
-      } else if (this.roomHeight > this.roomWidth) {
-        k = this.roomHeight / this.svgMaxHeight;
+    if (this.roomHeight === this.roomWidth) {
+      this.svgHeight = this.svgMaxHeight;
+      this.svgWidth = this.svgMaxWidth;
+    } else {
+      if (this.roomHeight > this.roomWidth) {
+        this.svgHeight = this.svgMaxHeight;
+        this.svgWidth = Math.round((this.roomWidth / this.roomHeight) * this.svgMaxWidth);
+      } else {
+        this.svgWidth = this.svgMaxWidth;
+        this.svgHeight = Math.round((this.roomHeight / this.roomWidth) * this.svgMaxHeight);
       }
-
-      this.svgHeight = this.roomHeight / k;
-      this.svgWidth = this.roomWidth / k;
-
-    } else {     
-        this.svgWidth = this.roomWidth;     
-        this.svgHeight = this.roomHeight;
     }
   }
 
@@ -315,35 +314,35 @@ export class RoomDesignerComponent implements OnInit, OnChanges {
   }
 
   @HostListener('document:keypress', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
-    
+  handleKeyboardEvent(event: KeyboardEvent) {
+
     switch (event.key) {
       case 'r':
         this.changeDeskDirection();
-      break;
+        break;
       case 'c':
         this.detectCollisions();
-      break;
+        break;
       case 'w':
         if (this.selectedDesk) {
           this.selectedDesk.positionY -= 1;
         }
-      break;
+        break;
       case 'd':
         if (this.selectedDesk) {
           this.selectedDesk.positionX += 1;
-        }    
-      break;
+        }
+        break;
       case 's':
         if (this.selectedDesk) {
           this.selectedDesk.positionY += 1;
-        }    
-      break;
+        }
+        break;
       case 'a':
         if (this.selectedDesk) {
           this.selectedDesk.positionX -= 1;
-        } 
-      break;
+        }
+        break;
     }
 
     this.detectCollisionsAndEmit();

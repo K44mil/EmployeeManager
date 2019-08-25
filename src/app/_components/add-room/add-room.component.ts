@@ -57,7 +57,7 @@ export class AddRoomComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('changes');
+    // console.log('changes');
   }
 
   onRoomFormChanges() {
@@ -78,7 +78,7 @@ export class AddRoomComponent implements OnInit, OnChanges {
   }
 
   setIsColliding(e) {
-    console.log(e);
+    // console.log(e);
 
     if ((e.numberOfDesksLeft === 0 || e.numberOfDesksLeft === '0') && e.isColliding === false) {
       this.roomDesignerFlag.patchValue({
