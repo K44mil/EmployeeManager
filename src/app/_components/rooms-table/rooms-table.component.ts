@@ -74,4 +74,8 @@ export class RoomsTableComponent implements OnInit {
     this.ngxSmartModalService.getModal('roomViewModal').open();
   }
 
+  refreshTableAfterEdit(e) {
+    this.loadRooms();
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RoomFormValidator } from '../../_validators/room-form-validator';
 
@@ -23,6 +23,9 @@ export class EditRoomComponent implements OnInit, OnChanges {
   roomHeight = 0;
   numberOfDesks = 0;
   desksToSave = [];
+
+  // refresh table view after edit with event emitter
+  @Output() refreshViewEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -84,8 +87,8 @@ export class EditRoomComponent implements OnInit, OnChanges {
     this.roomService.update(this.room.id, roomData)
       .pipe(first())
       .subscribe();
-
-    this.roomForm.reset();
+      
+    this.refreshViewEvent.emit(null);
   }
 
   onRoomFormChanges() {

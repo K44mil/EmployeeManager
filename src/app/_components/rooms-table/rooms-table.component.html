@@ -57,7 +57,7 @@
 <ngx-smart-modal #roomEditModal identifier="roomEditModal">
     <h1>EDIT ROOM</h1>
 
-    <app-edit-room *ngIf="this.selectedRoom" [room]="this.selectedRoom" ></app-edit-room>
+    <app-edit-room *ngIf="this.selectedRoom" [room]="this.selectedRoom" (refreshViewEvent)="refreshTableAfterEdit($event)"></app-edit-room>
 
     <button class="btn btn-secondary btn-modal" (click)="roomEditModal.close()">CLOSE</button>
 </ngx-smart-modal>

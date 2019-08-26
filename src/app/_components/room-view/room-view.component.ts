@@ -5,6 +5,7 @@ import { DeskService } from 'src/app/_services/desk.service';
 import { first } from 'rxjs/operators';
 import { EmployeeService } from 'src/app/_services/employee.service';
 import { Employee } from 'src/app/_models/employee';
+import { FormControl } from '@angular/forms';
 
 class Circle {
 
@@ -68,6 +69,11 @@ export class RoomViewComponent implements OnInit, OnChanges {
   selectedDraggableCircle: Circle = null;
   highlightedDesk: Desk = null;
 
+  //--
+  availableEmployees: Employee[] = [];
+  employeeFormControl: FormControl;
+
+
   constructor(
     private deskService: DeskService,
     private employeeService: EmployeeService
@@ -76,7 +82,12 @@ export class RoomViewComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.employeeService.getEmployees()
       .pipe(first())
-      .subscribe(e => this.employees = e);
+      .subscribe(e => {
+        this.employees = e;
+        this.availableEmployees =  this.employees.filter(e => e.room.number === '-');
+      });
+
+    this.employeeFormControl = new FormControl('');
   }
 
   ngOnChanges() {
@@ -243,6 +254,26 @@ export class RoomViewComponent implements OnInit, OnChanges {
       this.selectedEmployee = null;
       this.selectedDraggableCircle = null;
       this.updateEmployeesCircles();
+    }
+  }
+
+  assignEmployeeToDesk() {
+    if (this.employeeFormControl.value && this.selectedDesk) {
+      console.log(this.employeeFormControl.value);
+      // assign employee to this room
+      this.employeeService.assignToRoom(this.selectedDesk.roomId, this.employeeFormControl.value)
+        .pipe(first())
+        .subscribe(() => this.availableEmployees =  this.employees.filter(e => e.room.number === '-'));
+      // assign employee to selected desk
+      this.selectedDesk.employeeId = this.employeeFormControl.value.id;
+      // update desk in db
+      this.deskService.update(this.selectedDesk.id, this.selectedDesk)
+        .pipe(first())
+        .subscribe(() => {
+          this.selectedDesk = null;
+          this.updateEmployeesCircles();
+        });
+      
     }
   }
 }

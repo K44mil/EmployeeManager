@@ -66,9 +66,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return editPosition();
                 case url.match(/\/employees\/\d+$/) && method === 'PUT':
                     return editEmployee();
+                case url.match(/\/desks\/\d+$/) && method === 'PUT':
+                    return editDesk();
+                case url.match(/\/employees\/roomid=\/\d+$/) && method === 'PUT':
+                    return assignEmployeeToRoom();
                 case url.match(/\/info\/\d+$/) && method === 'GET':
                     return info();
                 default:
+                    console.log('default backend handle route');
                     return next.handle(request);
             }
         }
@@ -249,6 +254,42 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
 
             localStorage.setItem('employees', JSON.stringify(employees));
+
+            return ok();
+        }
+
+        function assignEmployeeToRoom() {
+            const employee = body;
+            const room = rooms.filter(room => room.id === idFromUrl())[0];
+
+            employees.forEach(e => {
+                if (e.id === employee.id) {
+                    e.room = room;
+                }
+            });
+
+            rooms.forEach(r => {
+                if (r.id === idFromUrl()) {
+                    r.occupiedPlaces++;
+                }
+            });
+
+            localStorage.setItem('rooms', JSON.stringify(rooms));
+            localStorage.setItem('employees', JSON.stringify(employees));
+            
+            return ok();
+        }
+
+        function editDesk() {
+            const desk = body;
+
+            desks.forEach(d => {
+                if (d.id === idFromUrl()) {
+                    d.employeeId = desk.employeeId;
+                }
+            });
+
+            localStorage.setItem('desks', JSON.stringify(desks));
 
             return ok();
         }

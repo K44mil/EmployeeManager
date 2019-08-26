@@ -118,7 +118,7 @@
 
     </svg>
 </div>
-<div style="margin-top: 5px;">
+<div style="margin-top: 10px;">
 </div>
 <div *ngIf="this.selectedEmployee">
     <p>{{ this.selectedEmployee.firstName }} {{ this.selectedEmployee.lastName }}</p>
@@ -129,5 +129,14 @@
     </div>
 </div>
 <div *ngIf="!this.selectedEmployee && this.selectedDesk">
-    <p>Puste biurko</p>
+    <div class="row" style="margin-top: 10px">
+        <div class="col-12 col-md-12">
+            <div class="form-group">
+                <select class="custom-select" size="3" [formControl]="employeeFormControl">
+                    <option *ngFor="let employee of availableEmployees" [ngValue]="employee">{{ employee.firstName }} {{ employee.lastName }}  [ {{ employee.position.name }} ] </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-success" (click)="assignEmployeeToDesk()">ASSIGN</button>
 </div>

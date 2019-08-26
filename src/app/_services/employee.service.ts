@@ -26,4 +26,8 @@ export class EmployeeService {
   update(id: number, employee: Employee) {
     return this.http.put(`${this.employeeUrl}/${id}`, employee);
   }
+
+  assignToRoom(id: number, employee: Employee) {
+    return this.http.put(`${this.employeeUrl}/roomid=/${id}`, employee);
+  }
 }
