@@ -86,9 +86,9 @@ export const ROOMS: Room[] = [
         id: 10,
         number: '110',
         name: 'Room 10',
-        height: 1000,
-        width: 1000,
-        capacity: 2,
+        height: 400,
+        width: 400,
+        capacity: 4,
         occupiedPlaces: 0
     }
 ];

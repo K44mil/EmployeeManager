@@ -3,17 +3,30 @@
     [attr.width]="this.svgWidth"
     [attr.height]="this.svgHeight" 
     [attr.viewBox]="this.viewBox" 
-    id="svgElement">
+    id="svgElement"
+    (click)="selectDesk($event)"
+    (mousemove)="onSvgMouseMove($event)"
+    (mouseup)="onSvgMouseUp($event)">
 
-    <!-- Only desks -->
-
-    <g *ngFor="let desk of desks">
+    <g *ngFor="let circle of employeesCircles">
         <circle 
-        *ngIf="desk.employeeId !== -1"
-        [attr.cx]="desk.positionX+75"
-        [attr.cy]="desk.positionY+70"
-        [attr.r]="30"
-        fill="black">
+        [attr.cx]="circle.cx"
+        [attr.cy]="circle.cy"
+        [attr.r]="circle.r"
+        fill="black"
+        (click)="selectDesk($event, circle.id)"
+        (mousedown)="selectDraggableCircle($event, circle.id)">
+        </circle>
+
+        <circle 
+        *ngIf="this.selectedEmployee && this.selectedEmployee.id === circle.employeeId"
+        [attr.cx]="circle.cx"
+        [attr.cy]="circle.cy"
+        [attr.r]="circle.r"
+        fill="green"
+        stroke="aquamarine"
+        stroke-width="3"
+        (mousedown)="selectDraggableCircle($event, circle.id)">
         </circle>
     </g>
     
@@ -28,7 +41,10 @@
         stroke="black"
         stroke-width="5"
         rx="15"
-        fill="brown"> 
+        fill="brown"
+        (click)="selectDesk($event, desk.id)"
+        (mouseenter)="highlightDesk($event, desk.id)"
+        (mouseleave)="unhighlight($event, desk.id)"> 
         </rect>
 
         <!-- front to top -->
@@ -40,7 +56,10 @@
         stroke="black"
         stroke-width="5"
         rx="15"
-        fill="brown"> 
+        fill="brown"
+        (click)="selectDesk($event, desk.id)"
+        (mouseenter)="highlightDesk($event, desk.id)"
+        (mouseleave)="unhighlight($event, desk.id)"> 
         </rect>
 
         <!-- front to right -->
@@ -52,7 +71,10 @@
         stroke="black"
         stroke-width="5"
         rx="15"
-        fill="brown"> 
+        fill="brown"
+        (click)="selectDesk($event, desk.id)"
+        (mouseenter)="highlightDesk($event, desk.id)"
+        (mouseleave)="unhighlight($event, desk.id)"> 
         </rect>
 
         <!-- front to bottom -->
@@ -64,12 +86,48 @@
         stroke="black"
         stroke-width="5"
         rx="15"
-        fill="brown"> 
+        fill="brown"
+        (click)="selectDesk($event, desk.id)"
+        (mouseenter)="highlightDesk($event, desk.id)"
+        (mouseleave)="unhighlight($event, desk.id)"> 
         </rect>
 
+    </g>
+    
+    <!-- Draw if selectedd draggable circle -->
+    <!-- TODO: -->
 
-    </g>   
+    <!-- <g *ngFor="let circle of employeesCircles">
+        <circle *ngIf="this.selectedDraggableCircle && this.selectedDraggableCircle.id === circle.id"
+        [attr.cx]="circle.cx"
+        [attr.cy]="circle.cy"
+        [attr.r]="circle.r"
+        fill="black">
+        </circle>
+
+        <circle 
+        *ngIf="this.selectedEmployee && this.selectedEmployee.id === circle.employeeId && this.selectedDraggableCircle && this.selectedDraggableCircle.id === circle.id"
+        [attr.cx]="circle.cx"
+        [attr.cy]="circle.cy"
+        [attr.r]="circle.r"
+        fill="green"
+        stroke="aquamarine"
+        stroke-width="3">
+        </circle>
+    </g> -->
+
     </svg>
 </div>
 <div style="margin-top: 5px;">
+</div>
+<div *ngIf="this.selectedEmployee">
+    <p>{{ this.selectedEmployee.firstName }} {{ this.selectedEmployee.lastName }}</p>
+    <p>{{ this.selectedEmployee.position.name }}</p>
+    <p>{{ this.selectedEmployee.salary | currency }}</p>
+    <div class="form-group">
+        <button class="btn btn-danger" (click)="removeEmployee()">REMOVE</button>
+    </div>
+</div>
+<div *ngIf="!this.selectedEmployee && this.selectedDesk">
+    <p>Puste biurko</p>
 </div>
