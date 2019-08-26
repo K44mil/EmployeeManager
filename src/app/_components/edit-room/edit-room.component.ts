@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RoomFormValidator } from '../../_validators/room-form-validator';
+
 import { Room } from 'src/app/_models/room';
 import { DataService } from 'src/app/_services/data.service';
 import { RoomService } from 'src/app/_services/room.service';
@@ -13,7 +15,14 @@ import { first } from 'rxjs/operators';
 export class EditRoomComponent implements OnInit, OnChanges {
 
   roomForm: FormGroup;
+  roomDesignerFlag: FormGroup;
   @Input() room: Room;
+
+  isRoomValid = false;
+  roomWidth = 0;
+  roomHeight = 0;
+  numberOfDesks = 0;
+  desksToSave = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,10 +34,16 @@ export class EditRoomComponent implements OnInit, OnChanges {
     this.roomForm = this.formBuilder.group({
       number: ['', Validators.required],
       name: ['', Validators.required],
+      width: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      height: ['', [Validators.required, Validators.min(200), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       capacity: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+    }, { validator: RoomFormValidator('width', 'height', 'capacity') });
+    this.roomDesignerFlag = this.formBuilder.group({
+      isColliding: ['', Validators.required]
     });
 
     this.setRoomEditFormValue();
+    this.onRoomFormChanges();
   }
 
   ngOnChanges() {
@@ -43,9 +58,16 @@ export class EditRoomComponent implements OnInit, OnChanges {
       this.roomForm.patchValue({
         number: this.room.number,
         name: this.room.name,
+        width: this.room.width,
+        height: this.room.height,
         capacity: this.room.capacity
       });
     }
+
+    this.roomHeight = this.room.height;
+    this.roomWidth = this.room.width;
+    this.numberOfDesks = this.room.capacity;
+    this.isRoomValid = true;
   }
 
   onSubmit() {
@@ -54,9 +76,49 @@ export class EditRoomComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.roomService.update(this.room.id, this.roomForm.value)
+    const roomData = {
+      roomObj: this.roomForm.value,
+      desksInRoom: this.desksToSave
+    };
+
+    this.roomService.update(this.room.id, roomData)
       .pipe(first())
       .subscribe();
+
+    this.roomForm.reset();
+  }
+
+  onRoomFormChanges() {
+    this.roomForm.valueChanges.subscribe(formValue => {
+
+      this.isRoomValid = false; // reset 
+
+      if (this.roomForm.valid) {
+        this.isRoomValid = true;
+      } else {
+        this.isRoomValid = false;
+      }
+
+      this.roomHeight = formValue.height;
+      this.roomWidth = formValue.width;
+      this.numberOfDesks = formValue.capacity;
+    });
+  }
+
+  setIsColliding(e) {
+    // console.log(e);
+
+    if ((e.numberOfDesksLeft === 0 || e.numberOfDesksLeft === '0') && e.isColliding === false) {
+      this.roomDesignerFlag.patchValue({
+        isColliding: 'false'
+      });
+    } else {
+      this.roomDesignerFlag.patchValue({
+        isColliding: null
+      });
+    }
+    this.roomDesignerFlag.updateValueAndValidity();
+    this.desksToSave = e.desks;
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit, Output, EventEmitter, ɵConsole } from '@angular/core';
+import { Component, OnInit, HostListener, Input, OnChanges, AfterViewInit, Output, EventEmitter, ɵConsole, OnDestroy } from '@angular/core';
 import { Desk } from 'src/app/_models/desk';
 import { Room } from 'src/app/_models/room';
 import { DeskService } from 'src/app/_services/desk.service';
@@ -80,6 +80,8 @@ export class RoomViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.nullDesksAndCircles();
+
     this.deskService.getAllDesksByRoomId(this.room.id)
       .pipe(first())
       .subscribe(desks => {
@@ -89,6 +91,16 @@ export class RoomViewComponent implements OnInit, OnChanges {
 
     this.viewBox = '0 0 ' + this.room.width.toString() + ' ' + this.room.height.toString();
     this.setSvgScaledSize();
+  }
+
+  nullDesksAndCircles() {
+    this.desks = [];
+    this.employeesCircles = [];
+    this.selectedEmployee = null;
+    this.selectedDesk = null;
+    this.selectedDraggableCircle = null;
+    this.selectedDesk = null;
+    this.highlightedDesk = null;
   }
 
   setSvgScaledSize() {
@@ -139,7 +151,6 @@ export class RoomViewComponent implements OnInit, OnChanges {
 
     // highlight draggable circle and show info
     this.selectDesk(null, circle.id);
-
   }
 
   // dragg selectedCircle

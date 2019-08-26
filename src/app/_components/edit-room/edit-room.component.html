@@ -1,38 +1,104 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
 <div>
-    <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="number">Room number</label>
-            <input type="text" class="form-control" id="number" formControlName="number">
-            <!-- Validation alerts -->
-            <div *ngIf="f.number.invalid && (f.number.dirty || f.number.touched)">
-                <div *ngIf="f.number.errors.required" class="text-danger">
-                    Room number is required.
+    <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="roomForm">
+            <ng-template matStepLabel>Properties</ng-template>
+            <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="number">Room number</label>
+                    <input type="text" class="form-control" id="number" formControlName="number">
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.number.invalid && (f.number.dirty || f.number.touched)">
+                        <div *ngIf="f.number.errors.required" class="text-danger">
+                            Room number is required.
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="name">Room name</label>
-            <input type="text" class="form-control" id="name" formControlName="name">
-            <!-- Validation alerts -->
-            <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">
-                    <div *ngIf="f.name.errors.required" class="text-danger">
-                        Room name is required.
+                <div class="form-group">
+                    <label for="name">Room name</label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">
+                            <div *ngIf="f.name.errors.required" class="text-danger">
+                                Room name is required.
+                            </div>
                     </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="capacity">Room capacity</label>
-            <input type="text" class="form-control" id="capacity" formControlName="capacity">
-            <!-- Validation alerts -->
-            <div *ngIf="f.capacity.invalid && (f.capacity.dirty || f.capacity.touched)">
-                    <div *ngIf="f.capacity.errors.required" class="text-danger">
-                        Room capacity is required.
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="width">Room length X</label>
+                            <input type="text" class="form-control" id="width" formControlName="width">
+                        </div>
                     </div>
-                    <div *ngIf="f.capacity.errors?.pattern" class="text-danger">
-                        Room capacity should be a number.
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="height">Room length Y</label>
+                            <input type="text" class="form-control" id="height" formControlName="height">
+                        </div>
                     </div>
-            </div>
-        </div>
-        <button type="submit" [disabled]="this.roomForm.invalid" class="btn btn-success">SAVE</button>
-    </form>
+                    <!-- Validation alerts [width] -->
+                    <div class="col-12 col-md-12" *ngIf="f.width.invalid && (f.width.dirty || f.width.touched)">
+                        <div *ngIf="f.width.errors.required" class="text-danger">
+                            Room lengthX is required.
+                        </div>
+                        <div *ngIf="f.width.errors.pattern" class="text-danger">
+                            Room lengthX should be a number [cm].
+                        </div>
+                        <div *ngIf="f.width.errors.min" class="text-danger">
+                            Room lengthX should be greater or equal 200 [cm].
+                        </div>
+                    </div>
+                    <!-- Validation alerts [height] -->
+                    <div class="col-12 col-md-12" *ngIf="f.height.invalid && (f.height.dirty || f.height.touched)">
+                        <div *ngIf="f.height.errors.required" class="text-danger">
+                            Room lengthY is required.
+                        </div>
+                        
+                        <div *ngIf="f.height.errors.pattern" class="text-danger">
+                            Room lengthY should be a number [cm].
+                        </div>
+                        
+                        <div *ngIf="f.height.errors.min" class="text-danger">
+                            Room lengthY should be greater or equal 200 [cm].
+                        </div>
+                    </div>          
+                </div>
+                <div class="form-group">
+                    <label for="capacity">Room capacity</label>
+                    <input type="text" class="form-control" id="capacity" formControlName="capacity">
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.capacity.invalid && (f.capacity.dirty || f.capacity.touched)">
+                            <div *ngIf="f.capacity.errors.required" class="text-danger">
+                                Room capacity is required.
+                            </div>
+                            <div *ngIf="f.capacity.errors?.pattern" class="text-danger">
+                                Room capacity should be a number.
+                            </div>
+                            <div *ngIf="f.capacity.errors?.maxDesks" class="text-danger">
+                                There is no place for so many desks.
+                            </div>
+                    </div>
+                </div>
+                <button type="button" [disabled]="this.roomForm.invalid"  class="btn btn-success" mat-button matStepperNext >Next</button>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="roomDesignerFlag">
+            <ng-template matStepLabel>Design</ng-template>
+            
+            <app-room-designer *ngIf="isRoomValid" [roomWidth]="this.roomWidth" [roomHeight]="this.roomHeight" [numberOfDesks]="this.numberOfDesks" (collidingEvent)="setIsColliding($event)"></app-room-designer>
+
+            <button type="button" [disabled]="roomDesignerFlag.invalid" class="btn btn-success" mat-button matStepperNext>Next</button>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>Room is ready to save!</p>
+            <button type="submit" [disabled]="this.roomForm.invalid"  class="btn btn-success" mat-button matStepperNext (click)="onSubmit()">SAVE</button>
+                    
+        </mat-step>
+
+    </mat-horizontal-stepper>
 </div>

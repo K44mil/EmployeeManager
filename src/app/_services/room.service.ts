@@ -25,8 +25,8 @@ export class RoomService {
     return this.http.post(`${this.roomsUrl}`, roomData);
   }
 
-  update(id: number, room: Room) {
-    return this.http.put(`${this.roomsUrl}/${id}`, room);
+  update(id: number, roomData: any) {
+    return this.http.put(`${this.roomsUrl}/${id}`, roomData);
   }
   
   getNumberOfEmployeesInRoom(id: number) {

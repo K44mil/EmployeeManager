@@ -129,24 +129,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function deleteRoom() {
             let roomToDelete = rooms.filter(x => x.id === idFromUrl())[0];
-
-            let nullRoom: Room = {
-                id: -1,
-                number: '-',
-                name: '-',
-                height: 1000,
-                width: 1000,
-                capacity: 1000,
-                occupiedPlaces: 0
-            };
-
-            employees.forEach(e => {
-                if (e.room.id === roomToDelete.id) {
-                    e.room = nullRoom;
-                }
-            });
-            localStorage.setItem('employees', JSON.stringify(employees));
-
+            removeEmployeesFromRoom();
             // delete desks in room
             desks = desks.filter(x => x.roomId !== roomToDelete.id);
             localStorage.setItem('desks', JSON.stringify(desks));
@@ -206,16 +189,31 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // PUT functions
 
         function editRoom() {
-            const room = body;
+            const room = body.roomObj;
+            const desksInRoom: Desk[] = body.desksInRoom;
+
+            // delete all previous desks in room
+            desks = desks.filter(desk => desk.roomId !== idFromUrl());
+            // remove employees from room
+            removeEmployeesFromRoom();
+
+            desksInRoom.forEach(desk => {
+                desk.id = desks.length ? Math.max(...desks.map(x => x.id)) + 1 : 1;
+                desk.roomId = idFromUrl();
+                desks.push(desk);
+            });
             
             rooms.forEach(r => {
                 if (r.id === idFromUrl()) {
                     r.number = room.number;
                     r.name = room.name;
+                    r.width = room.width;
+                    r.height = room.height;
                     r.capacity = room.capacity;
                 }
             });
 
+            localStorage.setItem('desks', JSON.stringify(desks));
             localStorage.setItem('rooms', JSON.stringify(rooms));
 
             return ok();
@@ -407,7 +405,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function sortBySalaryASC(e1, e2) {
             return ((e1.salary == e2.salary) ? 0 : ((e1.salary > e2.salary) ? 1 : -1 ));
-        }  
+        } 
+        
+        function removeEmployeesFromRoom() {
+            let roomToDelete = rooms.filter(x => x.id === idFromUrl())[0];
+
+            let nullRoom: Room = {
+                id: -1,
+                number: '-',
+                name: '-',
+                height: 1000,
+                width: 1000,
+                capacity: 1000,
+                occupiedPlaces: 0
+            };
+
+            employees.forEach(e => {
+                if (e.room.id === roomToDelete.id) {
+                    e.room = nullRoom;
+                }
+            });
+            localStorage.setItem('employees', JSON.stringify(employees));
+        }
     }
 }
 

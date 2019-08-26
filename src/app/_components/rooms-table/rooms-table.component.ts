@@ -23,6 +23,7 @@ export class RoomsTableComponent implements OnInit {
   // !--Pagination values
 
   selectedRoom: Room;
+  selectedRoomView: Room;
 
   viewRoomId: number;
 
@@ -68,7 +69,7 @@ export class RoomsTableComponent implements OnInit {
 
   viewRoom(id: number) {
     let roomToView = this.rooms.filter(room => room.id === id);
-    this.selectedRoom = roomToView[0];
+    this.selectedRoomView = roomToView[0];
 
     this.ngxSmartModalService.getModal('roomViewModal').open();
   }

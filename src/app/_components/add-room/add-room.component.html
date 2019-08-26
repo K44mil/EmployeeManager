@@ -38,7 +38,7 @@
                             <input type="text" class="form-control" id="height" formControlName="height">
                         </div>
                     </div>
-                    <!-- TODO: Validation alerts [width] -->
+                    <!-- Validation alerts [width] -->
                     <div class="col-12 col-md-12" *ngIf="f.width.invalid && (f.width.dirty || f.width.touched)">
                         <div *ngIf="f.width.errors.required" class="text-danger">
                             Room lengthX is required.
@@ -50,7 +50,7 @@
                             Room lengthX should be greater or equal 200 [cm].
                         </div>
                     </div>
-                    <!-- TODO: Validation alerts [height] -->
+                    <!-- Validation alerts [height] -->
                     <div class="col-12 col-md-12" *ngIf="f.height.invalid && (f.height.dirty || f.height.touched)">
                         <div *ngIf="f.height.errors.required" class="text-danger">
                             Room lengthY is required.
@@ -63,8 +63,7 @@
                         <div *ngIf="f.height.errors.min" class="text-danger">
                             Room lengthY should be greater or equal 200 [cm].
                         </div>
-                    </div>
-                    
+                    </div>          
                 </div>
                 <div class="form-group">
                     <label for="capacity">Room capacity</label>
@@ -90,7 +89,6 @@
             <ng-template matStepLabel>Design</ng-template>
             
             <app-room-designer *ngIf="isRoomValid" [roomWidth]="this.roomWidth" [roomHeight]="this.roomHeight" [numberOfDesks]="this.numberOfDesks" (collidingEvent)="setIsColliding($event)"></app-room-designer>
-            <!-- <app-room-designer></app-room-designer> -->
 
             <button type="button" [disabled]="roomDesignerFlag.invalid" class="btn btn-success" mat-button matStepperNext>Next</button>
         </mat-step>
