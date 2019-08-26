@@ -14,7 +14,7 @@ export const EMPLOYEES: Employee[] = [
         firstName: 'Jan',
         lastName: 'Kowalski',
         position: positions[4],
-        room: rooms[9],
+        room: rooms[0],
         salary: 13000
     },
     {
@@ -22,7 +22,7 @@ export const EMPLOYEES: Employee[] = [
         firstName: 'Hanna',
         lastName: 'Kowalska',
         position: positions[2],
-        room: rooms[9],
+        room: rooms[0],
         salary: 1000
     },
     {
@@ -30,7 +30,7 @@ export const EMPLOYEES: Employee[] = [
         firstName: 'Mariusz',
         lastName: 'Mickiewicz',
         position: positions[0],
-        room: rooms[0],
+        room: rooms[1],
         salary: 1600
     },
     {
@@ -38,7 +38,7 @@ export const EMPLOYEES: Employee[] = [
         firstName: 'Bartosz',
         lastName: 'Nowak',
         position: positions[3],
-        room: rooms[4],
+        room: rooms[1],
         salary: 1300
     },
     {
@@ -46,7 +46,7 @@ export const EMPLOYEES: Employee[] = [
         firstName: 'Franciszek',
         lastName: 'Bak',
         position: positions[5],
-        room: rooms[5],
+        room: rooms[2],
         salary: 2000
     }
 ];

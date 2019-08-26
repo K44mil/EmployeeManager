@@ -34,4 +34,8 @@ export class EmployeeService {
   removeFromAnyRoom(id: number) {
     return this.http.get(`${this.employeeUrl}/rmfromroom/employeeId=/${id}`);
   }
+
+  removeFromPreviousDesk(id: number) {
+    return this.http.get(`${this.employeeUrl}/rmfromdesk/employeeId=/${id}`);
+  }
 }

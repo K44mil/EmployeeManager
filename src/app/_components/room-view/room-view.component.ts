@@ -289,6 +289,11 @@ export class RoomViewComponent implements OnInit, OnChanges {
 
   assignEmployeeToDesk() {
     if (this.employeeFormControl.value && this.selectedDesk) {
+      
+      // remove from desk in other room
+      this.employeeService.removeFromPreviousDesk(this.employeeFormControl.value.id)
+        .pipe(first())
+        .subscribe();
       // assign employee to this room
       this.employeeService.assignToRoom(this.selectedDesk.roomId, this.employeeFormControl.value)
         .pipe(first())
