@@ -61,6 +61,7 @@ export class RoomViewComponent implements OnInit, OnChanges {
   //
   isColliding = false;
   @Output() collidingEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() refreshViewEvent: EventEmitter<any> = new EventEmitter<any>();
 
   //----
   employees: Employee[] = [];
@@ -83,8 +84,7 @@ export class RoomViewComponent implements OnInit, OnChanges {
     this.employeeService.getEmployees()
       .pipe(first())
       .subscribe(e => {
-        this.employees = e;
-        this.availableEmployees =  this.employees.filter(e => e.room.number === '-');
+        this.employees = e;   
       });
 
     this.employeeFormControl = new FormControl('');
@@ -115,18 +115,26 @@ export class RoomViewComponent implements OnInit, OnChanges {
   }
 
   setSvgScaledSize() {
-    if (this.room.height === this.room.width) {
+    const roomHeightAny: any = this.room.height;
+    const roomWidthAny: any = this.room.width;
+
+    const roomHeight = Number.parseInt(roomHeightAny);
+    const roomWidth = Number.parseInt(roomWidthAny);
+
+    if (roomHeight === roomWidth) {
       this.svgHeight = this.svgMaxHeight;
       this.svgWidth = this.svgMaxWidth;
     } else {
-      if (this.room.height > this.room.width) {
+      if (roomHeight > roomWidth) {
         this.svgHeight = this.svgMaxHeight;
-        this.svgWidth = Math.round((this.room.width / this.room.height) * this.svgMaxWidth);
+        this.svgWidth = Math.round((roomWidth / roomHeight) * this.svgMaxWidth);
       } else {
         this.svgWidth = this.svgMaxWidth;
-        this.svgHeight = Math.round((this.room.height / this.room.width) * this.svgMaxHeight);
+        this.svgHeight = Math.round((roomHeight / roomWidth) * this.svgMaxHeight);
       }
     }
+
+    console.log(this.svgWidth);
   }
 
   selectDesk(e?: MouseEvent, id?: number) {
@@ -135,6 +143,7 @@ export class RoomViewComponent implements OnInit, OnChanges {
       this.selectedDesk = desk;
       const employee = this.employees.filter(x => x.id === this.selectedDesk.employeeId)[0];
       this.selectedEmployee = employee;
+      this.availableEmployees = this.employees.filter(e => e.room.id !== this.selectedDesk.roomId);
     } else if (!(e.target instanceof SVGCircleElement || e.target instanceof SVGRectElement)) {
       this.selectedEmployee = null;
       this.selectedDesk = null;
@@ -227,6 +236,12 @@ export class RoomViewComponent implements OnInit, OnChanges {
   //   }
   // }
 
+  updateDesk(id: number, desk: Desk) {
+    this.deskService.update(id, desk)
+      .pipe(first())
+      .subscribe();
+  }
+
   onSvgMouseUp(e: MouseEvent) {
     if (this.selectedDraggableCircle) {
       if (this.highlightedDesk) {
@@ -235,6 +250,10 @@ export class RoomViewComponent implements OnInit, OnChanges {
         if (desk.employeeId === -1) {
           desk.employeeId = this.selectedDraggableCircle.employeeId;
           previousDesk.employeeId = -1;
+          // update previous desk and desk in db
+          this.updateDesk(desk.id, desk);
+          this.updateDesk(previousDesk.id, previousDesk);
+          //---view update
           this.selectedDraggableCircle = null;
           this.unhighlight(null, desk.id);
           this.updateEmployeesCircles();
@@ -248,22 +267,32 @@ export class RoomViewComponent implements OnInit, OnChanges {
 
   removeEmployee() {
     if (this.selectedEmployee) {
-      const desk = this.desks.filter(x => x.employeeId === this.selectedEmployee.id)[0];
-      desk.employeeId = -1;
-      this.selectedDesk = null;
-      this.selectedEmployee = null;
-      this.selectedDraggableCircle = null;
-      this.updateEmployeesCircles();
+      // remove employee from any room
+      this.employeeService.removeFromAnyRoom(this.selectedEmployee.id)
+        .pipe(first())
+        .subscribe(() => this.availableEmployees =  this.employees.filter(e => e.room.id !== this.selectedDesk.roomId));
+      // removee employee from selected desk
+      this.selectedDesk.employeeId = -1;
+      // update desk in db
+      this.deskService.update(this.selectedDesk.id, this.selectedDesk)
+        .pipe(first())
+        .subscribe(() => {
+          this.selectedDesk = null;
+          this.selectedEmployee = null;
+          this.selectedDraggableCircle = null;
+          this.updateEmployeesCircles();
+        });
+        
+      this.refreshViewEvent.emit(null);
     }
   }
 
   assignEmployeeToDesk() {
     if (this.employeeFormControl.value && this.selectedDesk) {
-      console.log(this.employeeFormControl.value);
       // assign employee to this room
       this.employeeService.assignToRoom(this.selectedDesk.roomId, this.employeeFormControl.value)
         .pipe(first())
-        .subscribe(() => this.availableEmployees =  this.employees.filter(e => e.room.number === '-'));
+        .subscribe(() => this.availableEmployees =  this.employees.filter(e => e.room.id !== this.selectedDesk.roomId));
       // assign employee to selected desk
       this.selectedDesk.employeeId = this.employeeFormControl.value.id;
       // update desk in db
@@ -274,6 +303,7 @@ export class RoomViewComponent implements OnInit, OnChanges {
           this.updateEmployeesCircles();
         });
       
+      this.refreshViewEvent.emit(null);
     }
   }
 }

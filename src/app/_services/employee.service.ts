@@ -30,4 +30,8 @@ export class EmployeeService {
   assignToRoom(id: number, employee: Employee) {
     return this.http.put(`${this.employeeUrl}/roomid=/${id}`, employee);
   }
+
+  removeFromAnyRoom(id: number) {
+    return this.http.get(`${this.employeeUrl}/rmfromroom/employeeId=/${id}`);
+  }
 }

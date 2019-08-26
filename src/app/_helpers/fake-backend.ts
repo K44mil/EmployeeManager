@@ -68,6 +68,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return editEmployee();
                 case url.match(/\/desks\/\d+$/) && method === 'PUT':
                     return editDesk();
+                case url.match(/\/employees\/rmfromroom\/employeeId=\/\d+$/) && method === 'GET':
+                    return removeEmployeeFromAnyRoom();
                 case url.match(/\/employees\/roomid=\/\d+$/) && method === 'PUT':
                     return assignEmployeeToRoom();
                 case url.match(/\/info\/\d+$/) && method === 'GET':
@@ -294,6 +296,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
+        function removeEmployeeFromAnyRoom() {
+
+            let nullRoom: Room = {
+                id: -1,
+                number: '-',
+                name: '-',
+                height: 1000,
+                width: 1000,
+                capacity: 1000,
+                occupiedPlaces: 0
+            };
+
+            employees.forEach(e => {
+                if (e.id === idFromUrl()) {
+                    e.room = nullRoom;
+                }
+            });
+
+            localStorage.setItem('employees', JSON.stringify(employees));
+
+            return ok();
+        }
 
         function info() {
 
