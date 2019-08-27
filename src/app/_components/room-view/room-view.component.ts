@@ -77,6 +77,7 @@ export class RoomViewComponent implements OnInit, OnChanges {
 
   //-- ASSIGN OPTION // 0 - assign in room view any employee // 1 - assign onlny new created employee
   @Input() option;
+  @Input() editEmployeeId: number;
 
   constructor(
     private deskService: DeskService,
@@ -100,11 +101,14 @@ export class RoomViewComponent implements OnInit, OnChanges {
       .pipe(first())
       .subscribe(desks => {
         this.desks = desks;
-        this.initEmployeesCircles();
+        this.updateEmployeesCircles();
+        if (this.option === 1) {
+          this.clearEmployeeCircleInEmpoyeeEdit();
+        }
       });
 
     this.viewBox = '0 0 ' + this.room.width.toString() + ' ' + this.room.height.toString();
-    this.setSvgScaledSize();
+    this.setSvgScaledSize(); 
   }
 
   nullDesksAndCircles() {
@@ -333,6 +337,15 @@ export class RoomViewComponent implements OnInit, OnChanges {
       
       this.refreshViewEvent.emit(null);
     }
+  }
+
+  clearEmployeeCircleInEmpoyeeEdit() {
+    this.desks.forEach(d => {
+      if (d.employeeId === this.editEmployeeId) {
+        d.employeeId = -1;
+      }
+    });
+    this.updateEmployeesCircles();
   }
 }
 
