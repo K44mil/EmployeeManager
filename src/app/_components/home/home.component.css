@@ -7,3 +7,11 @@
 .container-margin {
   margin-bottom: 5vh;
 }
+.gen-info-table {
+  display: block;
+  margin: 0 auto;
+}
+.content {
+  margin: 0 auto;
+  text-align: center;
+}

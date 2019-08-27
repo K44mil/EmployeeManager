@@ -8,6 +8,7 @@ import { EmployeeFormValidator } from '../../_validators/employee-form-validator
 import { PositionService } from 'src/app/_services/position.service';
 import { RoomService } from 'src/app/_services/room.service';
 import { first } from 'rxjs/operators';
+import { Desk } from 'src/app/_models/desk';
 
 @Component({
   selector: 'app-add-employee',
@@ -17,11 +18,14 @@ import { first } from 'rxjs/operators';
 export class AddEmployeeComponent implements OnInit {
 
   employeeForm: FormGroup;
+  employeeAssignFlag: FormGroup;
 
   rooms: Room[];
   positions: Position[];
   choosenPosition: Position;
   choosenRoom: Room;
+
+  choosenDeskId: number;
     
 
   constructor(
@@ -41,6 +45,10 @@ export class AddEmployeeComponent implements OnInit {
     },
     { 
       validator: EmployeeFormValidator('room', 'salary', 'position')
+    });
+
+    this.employeeAssignFlag = this.formBuilder.group({
+      isAssigned: ['', Validators.required]
     });
 
     this.loadRooms();
@@ -68,12 +76,16 @@ export class AddEmployeeComponent implements OnInit {
       return;
     }
 
-    this.employeeService.save(this.employeeForm.value)
+    const employeeData = {
+      employeeObj: this.employeeForm.value,
+      employeeDeskId: this.choosenDeskId
+    }
+
+    this.employeeService.save(employeeData)
       .pipe(first())
       .subscribe(() => this.loadRooms());
 
-    this.employeeForm.reset();
-    
+    this.employeeForm.reset(); 
   }
 
   getPosition(id: number) {
@@ -84,7 +96,6 @@ export class AddEmployeeComponent implements OnInit {
         }
       });
     }
-
     //console.log(this.choosenPosition);
   }
 
@@ -96,8 +107,17 @@ export class AddEmployeeComponent implements OnInit {
         }
       });
     }
-
     //console.log(this.choosenRoom);
+  }
+
+  refreshTableAfterEdit(e) {
+    if (e) {
+      this.employeeAssignFlag.patchValue({
+        isAssigned: 'true'
+      });
+      this.choosenDeskId = e.deskId;
+    }
+    this.employeeAssignFlag.updateValueAndValidity();
   }
   
 }

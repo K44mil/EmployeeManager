@@ -10,12 +10,41 @@
                 </div>
 
                 <div *ngIf="this.generalInfo" class="content">
-                    W firmie zatrudnionych jest {{ generalInfo.employeesNumber }} pracowników.
+                    <table class="gen-info-table">
+                        <thead>
+                            <th></th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Number of employees: </td>
+                                <td>{{ generalInfo.employeesNumber }}</td>
+                            </tr>
+                            <tr>
+                                <td>Best paid employee: </td>
+                                <td>{{ generalInfo.bestPaidEmployee.firstName }} {{ generalInfo.bestPaidEmployee.lastName }} ({{ generalInfo.bestPaidEmployee.position.name }}) {{ generalInfo.bestPaidEmployee.salary | currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Worst paid employee: </td>
+                                <td>{{ generalInfo.worstPaidEmployee.firstName }} {{ generalInfo.worstPaidEmployee.lastName }} ({{ generalInfo.worstPaidEmployee.position.name }}) {{ generalInfo.worstPaidEmployee.salary | currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Summary salaries: </td>
+                                <td>{{ generalInfo.sumSalary | currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Average salary: </td>
+                                <td>{{ generalInfo.avgSalary | currency }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- W firmie zatrudnionych jest {{ generalInfo.employeesNumber }} pracowników.
                     Najlepiej zarabiającym pracownikiem jest <b>{{ generalInfo.bestPaidEmployee.firstName }} {{ generalInfo.bestPaidEmployee.lastName }}
                         ({{ generalInfo.bestPaidEmployee.position.name }})</b> z pensją wynoszącą {{ generalInfo.bestPaidEmployee.salary | currency }} miesięcznie.
                     Najgorzej zarabiającym pracownikiem jest <b>{{ generalInfo.worstPaidEmployee.firstName }} {{ generalInfo.worstPaidEmployee.lastName }}
                             ({{ generalInfo.worstPaidEmployee.position.name }})</b> z pensją wynoszącą {{ generalInfo.worstPaidEmployee.salary | currency }} miesięcznie.
-                            Firma wydaje łącznie {{ generalInfo.sumSalary | currency }} na pensje dla pracowników, średnia pensja wynosi {{ generalInfo.avgSalary | currency }}
+                            Firma wydaje łącznie {{ generalInfo.sumSalary | currency }} na pensje dla pracowników, średnia pensja wynosi {{ generalInfo.avgSalary | currency }} -->
                 </div>
             </div>
         </div>  

@@ -65,7 +65,7 @@
 <ngx-smart-modal #roomViewModal identifier="roomViewModal">
     <h1>ROOM VIEW</h1>
     
-    <app-room-view *ngIf="this.selectedRoomView" [room]="this.selectedRoomView" (refreshViewEvent)="refreshTableAfterEdit($event)"></app-room-view>
+    <app-room-view *ngIf="this.selectedRoomView" [room]="this.selectedRoomView" (refreshViewEvent)="refreshTableAfterEdit($event)" [option]="0"></app-room-view>
 
     <button class="btn btn-secondary btn-modal" (click)="roomViewModal.close()">CLOSE</button>
 </ngx-smart-modal>

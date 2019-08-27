@@ -19,7 +19,7 @@ export class EmployeeService {
     return this.http.delete(`${this.employeeUrl}/${id}`);
   }
 
-  save(employee: Employee) {
+  save(employee: any) {
     return this.http.post(`${this.employeeUrl}`, employee);
   }
 

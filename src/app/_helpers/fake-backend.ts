@@ -186,10 +186,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function addEmployee() {
-            const employee = body;
+            const employee = body.employeeObj;
+            const deskId = body.employeeDeskId;
 
             employee.id = employees.length ? Math.max(...employees.map(x => x.id)) +1 : 1;
+
+            desks.forEach(d => {
+                if (d.id === deskId) {
+                    d.employeeId = employee.id;
+                }
+            });
+            
             employees.push(employee);
+            localStorage.setItem('desks', JSON.stringify(desks));
             localStorage.setItem('employees', JSON.stringify(employees));
 
             return ok();

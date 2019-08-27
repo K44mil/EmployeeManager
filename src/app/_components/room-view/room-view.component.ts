@@ -66,6 +66,7 @@ export class RoomViewComponent implements OnInit, OnChanges {
   //----
   employees: Employee[] = [];
   selectedDesk: Desk = null;
+  previousSelectedDesk: Desk = null; // used only in adding new employee
   selectedEmployee: Employee = null;
   selectedDraggableCircle: Circle = null;
   highlightedDesk: Desk = null;
@@ -74,6 +75,8 @@ export class RoomViewComponent implements OnInit, OnChanges {
   availableEmployees: Employee[] = [];
   employeeFormControl: FormControl;
 
+  //-- ASSIGN OPTION // 0 - assign in room view any employee // 1 - assign onlny new created employee
+  @Input() option;
 
   constructor(
     private deskService: DeskService,
@@ -144,6 +147,26 @@ export class RoomViewComponent implements OnInit, OnChanges {
       const employee = this.employees.filter(x => x.id === this.selectedDesk.employeeId)[0];
       this.selectedEmployee = employee;
       this.availableEmployees = this.employees.filter(e => e.room.id !== this.selectedDesk.roomId);
+      // Option 1 - assign new employee
+      if (this.option === 1 && this.selectedDesk.employeeId === -1) {
+        
+        if (!this.previousSelectedDesk) {
+          this.previousSelectedDesk = this.selectedDesk;
+        } else {
+          this.previousSelectedDesk.employeeId = -1;
+          this.previousSelectedDesk = this.selectedDesk;
+        }
+
+        const employeeDeskData = {
+          deskId: this.selectedDesk.id,
+          isAssigned: true
+        };
+
+        this.refreshViewEvent.emit(employeeDeskData);
+
+        this.selectedDesk.employeeId = -2;
+        this.updateEmployeesCircles();
+      }
     } else if (!(e.target instanceof SVGCircleElement || e.target instanceof SVGRectElement)) {
       this.selectedEmployee = null;
       this.selectedDesk = null;

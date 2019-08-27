@@ -128,7 +128,8 @@
         <button class="btn btn-danger" (click)="removeEmployee()">REMOVE</button>
     </div>
 </div>
-<div *ngIf="!this.selectedEmployee && this.selectedDesk">
+<!-- Option 0 - assign exists employee to desk -->
+<div *ngIf="!this.selectedEmployee && this.selectedDesk && this.option === 0">
     <div class="row" style="margin-top: 10px">
         <div class="col-12 col-md-12">
             <div class="form-group">
