@@ -159,7 +159,6 @@ export class EditEmployeeComponent implements OnInit, OnChanges {
       this.choosenDeskId = e.deskId;
     }
     this.employeeAssignFlag.updateValueAndValidity();
-    
   }
 
 }

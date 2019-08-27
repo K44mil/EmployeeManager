@@ -78,7 +78,7 @@
                     </div>
                     <small *ngIf="this.choosenPosition">Should be between {{ this.choosenPosition.minWage | currency }} and {{ this.choosenPosition.maxWage | currency }}</small>
                 </div>
-                <button type="button" [disabled]="this.employeeEditForm.invalid" class="btn btn-success" mat-button matStepperNext (click)="removeEmployeeFromPreviousDesk()">Next</button>
+                <button type="button" [disabled]="this.employeeEditForm.invalid" class="btn btn-success" mat-button matStepperNext>Next</button>
             </form>
         </mat-step>
 
