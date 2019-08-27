@@ -1,78 +1,99 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
 <div>
-    <form [formGroup]="employeeEditForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="firstName">First name</label>
-            <input type="text" class="form-control" id="firstName" formControlName="firstName">
-            <!-- Validation alerts -->
-            <div *ngIf="f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)" class="text-danger">
-                <div *ngIf="f.firstName.errors?.required">
-                    First name is required.
+    <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="employeeEditForm">
+            <ng-template matStepLabel>Properties</ng-template>
+            <form [formGroup]="employeeEditForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="firstName">First name</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)" class="text-danger">
+                        <div *ngIf="f.firstName.errors?.required">
+                            First name is required.
+                        </div>
+                        <div *ngIf="f.firstName.errors?.minlength">
+                            The given first name is too short.
+                        </div>
+                        <div *ngIf="f.firstName.errors?.pattern && !f.firstName.errors?.minlength">
+                            First name should contains only letters and begins with capital letter.                
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="f.firstName.errors?.minlength">
-                    The given first name is too short.
+                <div class="form-group">
+                    <label for="lastName">Last name</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)" class="text-danger">
+                            <div *ngIf="f.lastName.errors?.required">
+                                Last name is required.
+                            </div>
+                            <div *ngIf="f.lastName.errors?.minlength">
+                                The given last name is too short.
+                            </div>
+                            <div *ngIf="f.lastName.errors?.pattern && !f.lastName.errors?.minlength">
+                                Last name should contains only letters and begins with capital letter.                
+                            </div>
+                    </div>
                 </div>
-                <div *ngIf="f.firstName.errors?.pattern && !f.firstName.errors?.minlength">
-                    First name should contains only letters and begins with capital letter.                
+                <div class="form-group">
+                    <label for="position">Position</label>
+                    <select class="custom-select" size="3" formControlName="position" [compareWith]="comparePositions">
+                        <option *ngFor="let position of positions" (click)="getPosition(position.id)" [ngValue]="position">{{ position.name }}</option>
+                    </select>
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.position.invalid && (f.position.dirty || f.position.touched)" class="text-danger">
+                            <div *ngIf="f.position.errors?.required">
+                                Position is required.
+                            </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="lastName">Last name</label>
-            <input type="text" class="form-control" id="lastName" formControlName="lastName">
-            <!-- Validation alerts -->
-            <div *ngIf="f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)" class="text-danger">
-                    <div *ngIf="f.lastName.errors?.required">
-                        Last name is required.
+                <div class="form-group">
+                    <label for="room">Room</label>
+                    <select class="custom-select" size="3" formControlName="room" [compareWith]="compareRooms">
+                        <option *ngFor="let room of rooms" (click)="getRoom(room.id)" [ngValue]="room">{{ room.number }} {{ room.name }} [ {{ room.occupiedPlaces }} / {{ room.capacity }} ]</option>          
+                    </select>
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.room.invalid && (f.room.dirty || f.room.touched)" class="text-danger">
+                            <div *ngIf="f.room.errors?.required">
+                                Room is required.
+                            </div>
+                            <div *ngIf="f.room.errors?.busyRoom">
+                                This room is busy.
+                            </div>
                     </div>
-                    <div *ngIf="f.lastName.errors?.minlength">
-                        The given last name is too short.
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input type="text" class="form-control" id="salary" formControlName="salary">
+                    <!-- Validation alerts -->
+                    <div *ngIf="f.salary.invalid && (f.salary.dirty || f.salary.touched)" class="text-danger">
+                            <div *ngIf="f.salary.errors?.required">
+                                Salary is required.
+                            </div>
+                            <div *ngIf="f.salary.errors?.salaryNotMatch">
+                                Salary not match.
+                            </div>
                     </div>
-                    <div *ngIf="f.lastName.errors?.pattern && !f.lastName.errors?.minlength">
-                        Last name should contains only letters and begins with capital letter.                
-                    </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="position">Position</label>
-            <select class="custom-select" size="3" formControlName="position" [compareWith]="comparePositions">
-                <option *ngFor="let position of positions" (click)="getPosition(position.id)" [ngValue]="position">{{ position.name }}</option>
-            </select>
-            <!-- Validation alerts -->
-            <div *ngIf="f.position.invalid && (f.position.dirty || f.position.touched)" class="text-danger">
-                    <div *ngIf="f.position.errors?.required">
-                        Position is required.
-                    </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="room">Room</label>
-            <select class="custom-select" size="3" formControlName="room" [compareWith]="compareRooms">
-                <option *ngFor="let room of rooms" (click)="getRoom(room.id)" [ngValue]="room">{{ room.number }} {{ room.name }} [ {{ room.occupiedPlaces }} / {{ room.capacity }} ]</option>          
-            </select>
-            <!-- Validation alerts -->
-            <div *ngIf="f.room.invalid && (f.room.dirty || f.room.touched)" class="text-danger">
-                    <div *ngIf="f.room.errors?.required">
-                        Room is required.
-                    </div>
-                    <div *ngIf="f.room.errors?.busyRoom">
-                        This room is busy.
-                    </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="salary">Salary</label>
-            <input type="text" class="form-control" id="salary" formControlName="salary">
-            <!-- Validation alerts -->
-            <div *ngIf="f.salary.invalid && (f.salary.dirty || f.salary.touched)" class="text-danger">
-                    <div *ngIf="f.salary.errors?.required">
-                        Salary is required.
-                    </div>
-                    <div *ngIf="f.salary.errors?.salaryNotMatch">
-                        Salary not match.
-                    </div>
-            </div>
-            <small *ngIf="this.choosenPosition">Should be between {{ this.choosenPosition.minWage | currency }} and {{ this.choosenPosition.maxWage | currency }}</small>
-        </div>
-        <button type="submit" [disabled]="this.employeeEditForm.invalid" class="btn btn-success">SAVE</button>
-    </form>
+                    <small *ngIf="this.choosenPosition">Should be between {{ this.choosenPosition.minWage | currency }} and {{ this.choosenPosition.maxWage | currency }}</small>
+                </div>
+                <button type="button" [disabled]="this.employeeEditForm.invalid" class="btn btn-success" mat-button matStepperNext>Next</button>
+            </form>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Room</ng-template>
+
+            <app-room-view *ngIf="this.choosenRoom" [room]="this.choosenRoom" (refreshViewEvent)="refreshTableAfterEdit($event)" [option]="1"></app-room-view> 
+
+            <button type="button" [disabled]="employeeAssignFlag.invalid" class="btn btn-success" mat-button matStepperNext>Next</button>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>Employee is ready to save!</p>
+            <button type="submit" [disabled]="this.employeeEditForm.invalid"  class="btn btn-success" mat-button matStepperNext (click)="onSubmit()">SAVE</button>
+        </mat-step>
+    </mat-horizontal-stepper>
 </div>

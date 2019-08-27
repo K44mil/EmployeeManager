@@ -18,11 +18,13 @@ import { Employee } from 'src/app/_models/employee';
 export class EditEmployeeComponent implements OnInit, OnChanges {
 
   employeeEditForm: FormGroup;
+  employeeAssignFlag: FormGroup;
 
   rooms: Room[];
   positions: Position[];
   choosenPosition: Position;
   choosenRoom: Room;
+  choosenDeskId: number;
 
   @Input() employee: Employee;
 
@@ -44,6 +46,10 @@ export class EditEmployeeComponent implements OnInit, OnChanges {
     },
     { 
       validator: EmployeeFormValidator('room', 'salary', 'position')
+    });
+
+    this.employeeAssignFlag = this.formBuilder.group({
+      isAssigned: ['', Validators.required]
     });
 
     this.loadRooms();
@@ -72,17 +78,32 @@ export class EditEmployeeComponent implements OnInit, OnChanges {
   }
 
   setEmployeeEditFormValue() {
+
     if (this.employee && this.employeeEditForm) {
-      this.employeeEditForm.patchValue({
-        firstName: this.employee.firstName,
-        lastName: this.employee.lastName,
-        room: this.employee.room,
-        position: this.employee.position,
-        salary: this.employee.salary
-      });
+
+      if (this.employee.room.id !== -1) {
+        this.employeeEditForm.patchValue({
+          firstName: this.employee.firstName,
+          lastName: this.employee.lastName,
+          room: this.employee.room,
+          position: this.employee.position,
+          salary: this.employee.salary
+        });
+      } else {
+        this.employeeEditForm.patchValue({
+          firstName: this.employee.firstName,
+          lastName: this.employee.lastName,
+          position: this.employee.position,
+          salary: this.employee.salary
+        });
+      }
 
       this.choosenPosition = this.employee.position;
-      this.choosenRoom = this.employee.room;
+      if (this.employee.room.id !== -1) {
+        this.choosenRoom = this.employee.room; 
+      }
+      console.log(this.choosenRoom);
+      
     }
   }
 
@@ -94,7 +115,6 @@ export class EditEmployeeComponent implements OnInit, OnChanges {
         }
       });
     }
-
   }
 
   getRoom(id: number) {
@@ -121,9 +141,25 @@ export class EditEmployeeComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.employeeService.update(this.employee.id, this.employeeEditForm.value)
+    const employeeData = {
+      employeeObj: this.employeeEditForm.value,
+      employeeDeskId: this.choosenDeskId
+    }
+
+    this.employeeService.update(this.employee.id, employeeData)
       .pipe(first())
       .subscribe(() => this.loadRooms());
+  }
+
+  refreshTableAfterEdit(e) {
+    if (e) {
+      this.employeeAssignFlag.patchValue({
+        isAssigned: 'true'
+      });
+      this.choosenDeskId = e.deskId;
+    }
+    this.employeeAssignFlag.updateValueAndValidity();
+    
   }
 
 }

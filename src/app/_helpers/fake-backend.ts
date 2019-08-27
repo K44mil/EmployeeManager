@@ -254,7 +254,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function editEmployee() {
-            const employee = body;
+            const employee = body.employeeObj;
+            const deskId = body.employeeDeskId;
 
             employees.forEach(e => {
                 if (e.id === idFromUrl()) {
@@ -266,6 +267,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             });
 
+            // clear from previous desks
+            desks.forEach(d => {
+                if (d.employeeId === idFromUrl()) {
+                    d.employeeId = -1;
+                }
+                if (d.id === deskId) {
+                    d.employeeId = idFromUrl();
+                }
+            });
+
+            localStorage.setItem('desks', JSON.stringify(desks));
             localStorage.setItem('employees', JSON.stringify(employees));
 
             return ok();
